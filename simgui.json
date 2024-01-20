@@ -1,0 +1,44 @@
+{
+  "HALProvider": {
+    "PWM Outputs": {
+      "window": {
+        "visible": true
+      }
+    },
+    "RoboRIO": {
+      "window": {
+        "visible": true
+      }
+    }
+  },
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Auto choices": "String Chooser",
+      "/SmartDashboard/Drive Base": "DifferentialDrive",
+      "/SmartDashboard/Team": "String Chooser"
+    }
+  },
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "transitory": {
+      "SmartDashboard": {
+        "Auto choices": {
+          "open": true
+        },
+        "Team": {
+          "open": true,
+          "string[]##v_/SmartDashboard/Team/options": {
+            "open": true
+          }
+        },
+        "open": true
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "visible": true
+  }
+}
