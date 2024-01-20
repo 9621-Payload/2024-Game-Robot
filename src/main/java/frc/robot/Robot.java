@@ -26,11 +26,6 @@ public class Robot extends TimedRobot {
   private Joystick m_driverStick;
   private Joystick m_operatorStick;
 
-  // Parts of the robot drive base
-  private DifferentialDrive m_robotDrive;
-  private final Talon m_leftMotor = new Talon(0);
-  private final Talon m_rightMotor = new Talon(1);
-
   // Auto choosing
   private int m_autoSelected;
   private final SendableChooser<Integer> m_chooser = new SendableChooser<>();
@@ -38,14 +33,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    // We need to invert one side of the drivetrain so that positive voltages
-    // result in both sides moving forward.
-    m_rightMotor.setInverted(true);
-
-    m_robotDrive = new DifferentialDrive(m_leftMotor, m_rightMotor);
     m_driverStick = new Joystick(0);
     m_operatorStick = new Joystick(1);
-    RoboMove.setRobot(m_robotDrive);
+    RoboMove.setRobot();
 
     // Creates the menus for SmartDashboard
     //m_chooser.setDefaultOption("Drive Forward", 1);
