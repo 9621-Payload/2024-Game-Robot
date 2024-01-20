@@ -7,6 +7,7 @@ package frc.robot;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.motorcontrol.Talon;
@@ -14,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.lib.Config.Constants;
 import frc.lib.Util.Autonomous;
-import frc.lib.Util.RoboMove;
+import frc.lib.Util.RobotContainer;
 
 /**
  * This is a demo program showing the use of the DifferentialDrive class,
@@ -23,8 +24,10 @@ import frc.lib.Util.RoboMove;
  */
 public class Robot extends TimedRobot {
   // Controlling the robot
-  private Joystick m_driverStick;
-  private Joystick m_operatorStick;
+  private XboxController m_driverStick;
+  private XboxController m_operatorStick;
+
+  RobotContainer m_RobotContainer;
 
   // Auto choosing
   private int m_autoSelected;
@@ -33,9 +36,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    m_driverStick = new Joystick(0);
-    m_operatorStick = new Joystick(1);
-    RoboMove.setRobot();
+    m_RobotContainer = new RobotContainer();
+
 
     // Creates the menus for SmartDashboard
     //m_chooser.setDefaultOption("Drive Forward", 1);
@@ -49,7 +51,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    RoboMove.move(-m_driverStick.getY(), -m_driverStick.getX());
+    _robot.tankDrive(-m_driverStick.getRawAxis(1), -m_driverStick.getRawAxis(5));
   }
 
   @Override
