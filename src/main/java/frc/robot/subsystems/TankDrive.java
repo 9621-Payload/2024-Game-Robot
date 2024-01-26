@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -33,7 +31,7 @@ public class TankDrive extends SubsystemBase {
         m_rightMotors.setInverted(true);
     }
 
-    /**
+    /*
      * Drives the robot using arcade controls.
      */
     public void Move(DoubleSupplier forward, DoubleSupplier rotation) {
