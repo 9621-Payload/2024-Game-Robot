@@ -6,13 +6,10 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.autos.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.ShooterSpeakerShot;
-import frc.robot.commands.TelopTankMove;
+import frc.robot.commands.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TankDrive;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -30,7 +27,13 @@ public class RobotContainer {
   private final CommandXboxController c_operatorController =
       new CommandXboxController(OperatorConstants.kOperatorControllerPort);
 
-  /* Drive Values */
+  /* Triggers/Buttons */
+  private final Trigger operatorLeftTriggerDepressed = new Trigger(
+    () -> c_operatorController.getRawAxis(2) > 0.1);
+  private final Trigger operatorRightTriggerDepressed = new Trigger(
+    () -> c_operatorController.getRawAxis(3) > 0.1);
+    private final Trigger operatorRightBumper = c_operatorController.rightBumper();
+   
 
   /* The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -39,7 +42,7 @@ public class RobotContainer {
       new TelopTankMove(
         s_tankDrive, 
         () -> c_driverController.getLeftY(),
-        () -> c_driverController.getRightX()));
+        () -> c_driverController.getRightY()));
 
     /* Register the subsystems */
     CommandScheduler.getInstance().registerSubsystem(s_tankDrive);
@@ -50,17 +53,15 @@ public class RobotContainer {
 
   /* Assign commands to certain actions on the controllerss */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
     /* Driver */
     /* ====== */
     c_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
 
     /* Operator */
     /* ======== */
-    c_operatorController.leftTrigger().whileTrue(new ShooterSpeakerShot(s_Shooter));
+    operatorLeftTriggerDepressed.whileTrue(new ShooterIntake(s_Shooter));
+    operatorRightTriggerDepressed.whileTrue(new ShooterSpeakerShot(s_Shooter));
+    operatorRightBumper.whileTrue(new ShooterAmpShot(s_Shooter));
   }
 
   /*
