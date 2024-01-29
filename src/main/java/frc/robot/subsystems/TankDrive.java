@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.function.DoubleSupplier;
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,7 +13,7 @@ public class TankDrive extends SubsystemBase {
     private PWMSparkMax m_rightMotors = new PWMSparkMax(TankConstants.kRightMotorPort1);
 
     /* Robot drive */
-    private final DifferentialDrive m_Drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+    private final DifferentialDrive m_Drive;
 
     /* Gyro Sensor */
     // private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
@@ -29,12 +27,14 @@ public class TankDrive extends SubsystemBase {
         m_leftMotors.addFollower(m_leftMotorFollower);
         m_rightMotors.addFollower(m_rightMotorFollower);
         m_rightMotors.setInverted(true);
+
+       m_Drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
     }
 
     /*
      * Drives the robot using arcade controls.
      */
-    public void Move(DoubleSupplier forward, DoubleSupplier rotation) {
-        m_Drive.arcadeDrive(forward.getAsDouble(), rotation.getAsDouble());
+    public void Move(Double leftForward, Double rightForward) {
+        m_Drive.tankDrive(leftForward * TankConstants.kDriveMultiplier, rightForward * TankConstants.kDriveMultiplier);
     }
 }
