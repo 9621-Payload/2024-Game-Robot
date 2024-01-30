@@ -10,12 +10,12 @@ public class TelopTankMove extends Command {
     private DoubleSupplier v_leftForward;
     private DoubleSupplier v_rightForward;
 
-    public TelopTankMove(TankDrive m_Drive, DoubleSupplier v_forward, DoubleSupplier v_rotation){
+    public TelopTankMove(TankDrive m_Drive, DoubleSupplier v_lForward, DoubleSupplier v_rForward){
         this.m_Drive = m_Drive;
         addRequirements(m_Drive);
 
-        this.v_leftForward = v_forward;
-        this.v_rightForward = v_rotation;
+        this.v_leftForward = v_lForward;
+        this.v_rightForward = v_rForward;
     }
 
     @Override
