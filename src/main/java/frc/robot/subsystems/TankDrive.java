@@ -1,9 +1,13 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TankConstants;
+import java.lang.Math;
 
 public class TankDrive extends SubsystemBase {
     /* Motor controllers to move the tank */
@@ -16,7 +20,7 @@ public class TankDrive extends SubsystemBase {
     private final DifferentialDrive m_Drive;
 
     /* Gyro Sensor */
-    // private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+    private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 
     /* Odometry for tracking robot */
     // private final DifferentialDriveOdometry m_odometry;
@@ -36,5 +40,30 @@ public class TankDrive extends SubsystemBase {
      */
     public void Move(Double leftForward, Double rightForward) {
         m_Drive.tankDrive(leftForward * TankConstants.kDriveMultiplier, rightForward * TankConstants.kDriveMultiplier);
+    }
+
+    /*
+     * Drives the robot using arcade controls.
+     */
+    public void Rotate(Double rotation) {
+        double differ = m_gyro.getAngle() - rotation;
+        if (differ > 3) {
+            m_Drive.arcadeDrive(0, -0.75);
+        } else if (differ < -3){
+            m_Drive.arcadeDrive(0, 0.75);
+        } else {
+            m_Drive.arcadeDrive(0, 0.5 * (Math.abs(differ) / differ));
+        }
+    }
+
+    /*
+     * Get the rotation of the tank drive
+     */
+    public DoubleSupplier GetRotation() {
+        return () -> m_gyro.getAngle();
+    }
+
+    public void Calibrate() {
+        m_gyro.calibrate();
     }
 }
