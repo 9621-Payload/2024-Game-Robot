@@ -22,21 +22,33 @@ public class Shooter extends SubsystemBase {
     /*
      * Uses tank drive to move the motors to shoot high.
      */
-    public void SpeakerShot() {
-        m_Shooter.tankDrive(-1, -1);
+    public void SpeakerShot1() {
+        m_upperMotor.set(-1);
     }
+
+    /*
+     * Uses tank drive to move the motors to shoot high.
+     */
+    public void Fire() {
+        m_lowerMotor.set(-1);
+    }
+
 
     /*
      * Uses tank drive to move the motors to bring in the note in.
      */
     public void Intake() {
-        m_Shooter.tankDrive(0.75, 0.75);
+        m_Shooter.tankDrive(0.7, 0.7);
     }
 
     /*
      * Moves motors at seperate speeds to drop the note into the amp.
      */
     public void AmpShot() {
-        m_Shooter.tankDrive(-0.6, -0.6);
+        m_upperMotor.set(-0.185);
+    }
+
+    public void farShot() {
+        m_upperMotor.set(-.85);
     }
 }

@@ -2,6 +2,9 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
@@ -23,7 +26,7 @@ public class TankDrive extends SubsystemBase {
     private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 
     /* Odometry for tracking robot */
-    // private final DifferentialDriveOdometry m_odometry;
+    private final AHRS m_navX;
 
     /* Creates a new TankDrive */
     public TankDrive() {
@@ -33,6 +36,8 @@ public class TankDrive extends SubsystemBase {
         m_rightMotors.setInverted(true);
 
        m_Drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+       m_navX = new AHRS();
+       m_navX.getDisplacementX();
     }
 
     /*
@@ -46,13 +51,13 @@ public class TankDrive extends SubsystemBase {
      * Drives the robot using arcade controls.
      */
     public void Rotate(Double rotation) {
-        double differ = m_gyro.getAngle() - rotation;
-        if (differ > 3) {
+        double differ = GetRotation().getAsDouble() - rotation;
+        if (differ > 4) {
             m_Drive.arcadeDrive(0, -0.75);
-        } else if (differ < -3){
+        } else if (differ < -4){
             m_Drive.arcadeDrive(0, 0.75);
         } else {
-            m_Drive.arcadeDrive(0, 0.5 * (Math.abs(differ) / differ));
+            m_Drive.arcadeDrive(0, 0.4 * (Math.abs(differ) / differ));
         }
     }
 
@@ -60,10 +65,12 @@ public class TankDrive extends SubsystemBase {
      * Get the rotation of the tank drive
      */
     public DoubleSupplier GetRotation() {
-        return () -> m_gyro.getAngle();
+        return () -> m_navX.getAngle();
     }
 
     public void Calibrate() {
         m_gyro.calibrate();
+        m_navX.reset();
+        m_navX.zeroYaw();
     }
 }

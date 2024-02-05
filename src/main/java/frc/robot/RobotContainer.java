@@ -37,6 +37,9 @@ public class RobotContainer {
   private final Trigger driverupPad = c_driverController.povUp();  
   private final Trigger driverrightPad = c_driverController.povRight();
   private final Trigger driverleftPad = c_driverController.povLeft();
+  private final Trigger driverY = c_driverController.y();
+  private final Trigger operatorA = c_operatorController.a();
+  private final Trigger operatorUpPad = c_operatorController.povUp();
 
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -64,12 +67,15 @@ public class RobotContainer {
     driverupPad.whileTrue(new TelopTankRotate(s_tankDrive, 0.0));
     driverrightPad.whileTrue(new TelopTankRotate(s_tankDrive, 90.0));
     driverleftPad.whileTrue(new TelopTankRotate(s_tankDrive, 270.0));
+    driverY.whileTrue(new GyroReset(s_tankDrive));
 
     /* Operator */
     /* ======== */
     operatorLeftTriggerDepressed.whileTrue(new TelopShooterIntake(s_Shooter));
     operatorRightTriggerDepressed.whileTrue(new TelopShooterSpeakerShot(s_Shooter));
     operatorRightBumper.whileTrue(new TelopShooterAmpShot(s_Shooter));
+    operatorA.whileTrue(new TelopShooterSpeakerShotFire(s_Shooter));
+    operatorUpPad.whileTrue(new TelopShooterFarShot(s_Shooter));
   }
 
   /*
