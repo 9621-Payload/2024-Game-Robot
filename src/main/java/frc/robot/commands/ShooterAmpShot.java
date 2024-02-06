@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
-public class TelopShooterAmpShot extends Command {
+public class ShooterAmpShot extends Command {
     private Shooter s_Shooter;
 
-    public TelopShooterAmpShot(Shooter shooter) {
+    public ShooterAmpShot(Shooter shooter) {
         this.s_Shooter = shooter;
         addRequirements(shooter);
         

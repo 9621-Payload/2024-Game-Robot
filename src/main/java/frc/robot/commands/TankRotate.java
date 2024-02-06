@@ -3,11 +3,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TankDrive;
 
-public class TelopTankRotate extends Command {
+public class TankRotate extends Command {
     private TankDrive m_Drive;
     private Double v_rotation;
 
-    public TelopTankRotate(TankDrive m_Drive, Double v_rotation){
+    public TankRotate(TankDrive m_Drive, Double v_rotation){
         this.m_Drive = m_Drive;
         addRequirements(m_Drive);
 
@@ -21,10 +21,7 @@ public class TelopTankRotate extends Command {
 
     @Override
     public void execute(){
-        /* Drive */
+        /* Rotate */
         m_Drive.Rotate(v_rotation);
     }
-
-    //@Override
-    //public void 
 }

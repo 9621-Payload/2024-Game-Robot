@@ -3,13 +3,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
-public class TelopShooterIntake extends Command {
+public class ShooterFire extends Command {
     private Shooter s_Shooter;
+    private Double speed;
 
-    public TelopShooterIntake(Shooter shooter) {
+    public ShooterFire(Shooter shooter, Double speed) {
         this.s_Shooter = shooter;
         addRequirements(shooter);
         
+        this.speed = speed;
     }
 
     @Override
@@ -19,12 +21,13 @@ public class TelopShooterIntake extends Command {
 
     @Override
     public void execute(){
-        /* Intake */
-        s_Shooter.Intake();
+        /* Fire */
+        s_Shooter.Fire(speed);
     }
 
     @Override
-    public void end(boolean i){
+    public void end(boolean i ){
         s_Shooter.stop();
     }
+
 }

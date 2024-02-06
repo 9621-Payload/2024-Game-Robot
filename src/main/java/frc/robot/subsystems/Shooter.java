@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
@@ -10,19 +9,15 @@ public class Shooter extends SubsystemBase {
     private PWMSparkMax m_lowerMotor = new PWMSparkMax(ShooterConstants.kShootMotorLower);
     private PWMSparkMax m_upperMotor = new PWMSparkMax(ShooterConstants.kShootMotorUpper);
    
-    /* Robot drive */
-    private final DifferentialDrive m_Shooter;
-
     
     /* Creates a new Shooter */
     public Shooter() {
-       m_Shooter = new DifferentialDrive(m_lowerMotor, m_upperMotor);
     }
 
     /*
      * Uses tank drive to move the motors to shoot high.
      */
-    public void SpeakerShot1() {
+    public void SpeakerShot() {
         m_upperMotor.set(-1);
     }
 
@@ -38,7 +33,8 @@ public class Shooter extends SubsystemBase {
      * Uses tank drive to move the motors to bring in the note in.
      */
     public void Intake() {
-        m_Shooter.tankDrive(0.7, 0.7);
+        m_lowerMotor.set(0.7);
+        m_upperMotor.set(0.7);
     }
 
     /*

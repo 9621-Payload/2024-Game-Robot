@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
-public class TelopShooterSpeakerShot extends Command {
+public class ShooterSpeakerShot extends Command {
     private Shooter s_Shooter;
 
-    public TelopShooterSpeakerShot(Shooter shooter) {
+    public ShooterSpeakerShot(Shooter shooter) {
         this.s_Shooter = shooter;
         addRequirements(shooter);
         
@@ -20,6 +20,6 @@ public class TelopShooterSpeakerShot extends Command {
     @Override
     public void execute(){
         /* Shoot */
-        s_Shooter.SpeakerShot1();
+        s_Shooter.SpeakerShot();
     }
 }
