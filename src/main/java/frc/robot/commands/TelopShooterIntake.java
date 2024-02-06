@@ -22,4 +22,9 @@ public class TelopShooterIntake extends Command {
         /* Intake */
         s_Shooter.Intake();
     }
+
+    @Override
+    public void end(boolean i){
+        s_Shooter.stop();
+    }
 }

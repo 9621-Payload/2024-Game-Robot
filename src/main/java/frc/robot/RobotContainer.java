@@ -12,6 +12,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TankDrive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -38,7 +39,8 @@ public class RobotContainer {
   private final Trigger driverrightPad = c_driverController.povRight();
   private final Trigger driverleftPad = c_driverController.povLeft();
   private final Trigger driverY = c_driverController.y();
-  private final Trigger operatorA = c_operatorController.a();
+  private final Trigger driverLeftTriggerDepressed = new Trigger(
+      () -> c_driverController.getRawAxis(2) > 0.1);
   private final Trigger operatorUpPad = c_operatorController.povUp();
 
   /*
@@ -67,14 +69,14 @@ public class RobotContainer {
     driverupPad.whileTrue(new TelopTankRotate(s_tankDrive, 0.0));
     driverrightPad.whileTrue(new TelopTankRotate(s_tankDrive, 90.0));
     driverleftPad.whileTrue(new TelopTankRotate(s_tankDrive, 270.0));
-    driverY.whileTrue(new GyroReset(s_tankDrive));
+    driverY.onTrue(new GyroReset(s_tankDrive));
+    driverLeftTriggerDepressed.whileTrue(new TelopTankMoveStraight(s_tankDrive));
 
     /* Operator */
     /* ======== */
     operatorLeftTriggerDepressed.whileTrue(new TelopShooterIntake(s_Shooter));
-    operatorRightTriggerDepressed.whileTrue(new TelopShooterSpeakerShot(s_Shooter));
-    operatorRightBumper.whileTrue(new TelopShooterAmpShot(s_Shooter));
-    operatorA.whileTrue(new TelopShooterSpeakerShotFire(s_Shooter));
+    operatorRightTriggerDepressed.onTrue(new TelopShooterSpeakerShot(s_Shooter).withTimeout(1).andThen(new TelopShooterFire(s_Shooter, 1.0)).withTimeout(2));
+    operatorRightBumper.onTrue(new TelopShooterAmpShot(s_Shooter).withTimeout(1).andThen(new TelopShooterFire(s_Shooter, 0.6).withTimeout(1.4)));
     operatorUpPad.whileTrue(new TelopShooterFarShot(s_Shooter));
   }
 

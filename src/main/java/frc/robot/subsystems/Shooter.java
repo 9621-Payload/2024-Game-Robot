@@ -29,8 +29,8 @@ public class Shooter extends SubsystemBase {
     /*
      * Uses tank drive to move the motors to shoot high.
      */
-    public void Fire() {
-        m_lowerMotor.set(-1);
+    public void Fire(Double speed) {
+        m_lowerMotor.set(-speed);
     }
 
 
@@ -50,5 +50,10 @@ public class Shooter extends SubsystemBase {
 
     public void farShot() {
         m_upperMotor.set(-.85);
+    }
+
+    public void stop(){
+        m_upperMotor.set(0);
+        m_lowerMotor.set(0);
     }
 }
