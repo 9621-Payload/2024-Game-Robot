@@ -51,7 +51,7 @@ public class TankDrive extends SubsystemBase {
             double differ = (v_straightValue - GetRotation().getAsDouble()) / 10.0;
             m_Drive.tankDrive(Math.abs(leftForward) * TankConstants.kDriveMultiplier + differ, Math.abs(rightForward) * TankConstants.kDriveMultiplier - differ);
         } else {
-            m_Drive.tankDrive(leftForward * TankConstants.kDriveMultiplier, rightForward * TankConstants.kDriveMultiplier);
+            m_Drive.tankDrive(leftForward, rightForward);
         }
     }
 
