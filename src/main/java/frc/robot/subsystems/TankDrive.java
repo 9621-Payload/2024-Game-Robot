@@ -69,6 +69,10 @@ public class TankDrive extends SubsystemBase {
         }
     }
 
+    public void Stop(){
+        m_Drive.stopMotor();
+    }
+
     /*
      * Get the rotation of the tank drive
      */
@@ -81,7 +85,6 @@ public class TankDrive extends SubsystemBase {
      */
     public void Calibrate() {
         m_gyro.calibrate();
-        m_navX.reset();
         m_navX.zeroYaw();
     }
 

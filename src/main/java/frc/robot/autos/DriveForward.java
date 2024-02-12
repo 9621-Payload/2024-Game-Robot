@@ -11,5 +11,7 @@ public class DriveForward extends SequentialCommandGroup {
         addCommands(new ShooterFire(robot.GetShooter(), 1.0).withTimeout(0.5));
 
         addCommands(new TankMove(robot.GetTank(), -1.0, -1.0).withTimeout(3));
+
+        addCommands(new TankRotate(robot.GetTank(), 45.0));
     }
 }

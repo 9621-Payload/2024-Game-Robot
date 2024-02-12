@@ -45,4 +45,9 @@ public class TankMove extends Command {
             m_Drive.Move(auto_right, auto_left);
         }
     }
+
+    @Override
+    public void end(boolean i) {
+        m_Drive.Stop();
+    }
 }
