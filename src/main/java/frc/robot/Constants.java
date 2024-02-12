@@ -14,15 +14,15 @@ public final class Constants {
   }
 
   public static class TankConstants {
-    public static final int kLeftMotorPort1 = 3;
-    public static final int kLeftMotorPort2 = 2;
-    public static final int kRightMotorPort1 = 1;
-    public static final int kRightMotorPort2 = 0;
+    public static final int kLeftMotorPort1 = 5;
+    public static final int SkLeftMotorPort2 = 7;
+    public static final int kRightMotorPort1 = 4;
+    public static final int kRightMotorPort2 = 6;
     public static final double kDriveMultiplier = 0.8;
   }
 
   public static class ShooterConstants {
-    public static final int kShootMotorUpper = 4;
-    public static final int kShootMotorLower = 5;
+    public static final int kShootMotorUpper = 9;
+    public static final int kShootMotorLower = 8;
   }
 }
