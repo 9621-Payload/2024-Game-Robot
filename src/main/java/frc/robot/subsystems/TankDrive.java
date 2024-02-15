@@ -4,7 +4,6 @@ import java.util.function.DoubleSupplier;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,9 +21,6 @@ public class TankDrive extends SubsystemBase {
     private final DifferentialDrive m_Drive;
     private boolean v_driveStraight;
     private Double v_straightValue;
-
-    /* Gyro Sensor */
-    private final ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
 
     /* Odometry for tracking robot */
     private final AHRS m_navX;
@@ -84,7 +80,6 @@ public class TankDrive extends SubsystemBase {
      * Reset the 0 direction
      */
     public void Calibrate() {
-        m_gyro.calibrate();
         m_navX.zeroYaw();
     }
 
