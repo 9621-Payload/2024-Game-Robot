@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TankDrive;
+import frc.robot.subsystems.ClimberBox;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class RobotContainer {
   /* Subsystems */
   private final TankDrive s_tankDrive = new TankDrive();
   private final Shooter s_Shooter = new Shooter();
+  private final ClimberBox s_ClimberBox = new ClimberBox();
 
   /* Controllers */
   private final CommandXboxController c_driverController = new CommandXboxController(
@@ -45,6 +47,8 @@ public class RobotContainer {
   private final Trigger driverLeftTriggerDepressed = new Trigger(
       () -> c_driverController.getRawAxis(2) > 0.1);
   private final Trigger operatorUpPad = c_operatorController.povUp();
+  private final Trigger operatorY = c_operatorController.y();
+  private final Trigger operatorA = c_operatorController.a();
 
   private AutoModeSelector autoModeSelector;
 
@@ -64,6 +68,7 @@ public class RobotContainer {
     /* Register the subsystems */
     CommandScheduler.getInstance().registerSubsystem(s_tankDrive);
     CommandScheduler.getInstance().registerSubsystem(s_Shooter);
+    CommandScheduler.getInstance().registerSubsystem(s_ClimberBox);
 
     /* Shuffleboard setup */
     ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
@@ -80,8 +85,10 @@ public class RobotContainer {
     //    .withPosition(2, 0);
     mainTab.addDouble("Gyro", () -> s_tankDrive.GetRotation().getAsDouble()).withSize(1, 1)
         .withPosition(3, 0);
+    mainTab.addDouble("Arm", s_ClimberBox.GetPos()).withSize(1, 1)
+        .withPosition(4, 0);
     mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
-    mainTab.add("Gyro zero", new ZeroGyro(s_tankDrive)).withSize(2, 1).withPosition(2, 1);
+    mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox)).withSize(2, 1).withPosition(2, 1);
     //mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading()).withSize(2, 1)
     //    .withPosition(0, 2).withWidget(BuiltInWidgets.kDial).withProperties(pressureSensorMax);
     //mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve)).withSize(2, 1).withPosition(2, 2);
@@ -98,7 +105,7 @@ public class RobotContainer {
     driverupPad.whileTrue(new TankRotate(s_tankDrive, 0.0));
     driverrightPad.whileTrue(new TankRotate(s_tankDrive, 90.0));
     driverleftPad.whileTrue(new TankRotate(s_tankDrive, 270.0));
-    driverY.onTrue(new ZeroGyro(s_tankDrive));
+    driverY.onTrue(new ZeroGyro(s_tankDrive, s_ClimberBox));
     driverLeftTriggerDepressed.whileTrue(new TankMoveStraight(s_tankDrive));
 
     /* Operator */
@@ -109,6 +116,8 @@ public class RobotContainer {
     operatorRightBumper
         .onTrue(new ShooterAmpShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 0.6).withTimeout(1.4)));
     operatorUpPad.whileTrue(new ShooterFarShot(s_Shooter));
+    operatorA.whileTrue(new Decend(s_ClimberBox));
+    operatorY.whileTrue(new Lift(s_ClimberBox));
   }
 
   public TankDrive GetTank(){
