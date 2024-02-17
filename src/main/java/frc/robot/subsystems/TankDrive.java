@@ -41,13 +41,7 @@ public class TankDrive extends SubsystemBase {
      * Drives the robot using tank controls.
      */
     public void Move(Double leftForward, Double rightForward) {
-        if (v_driveStraight) {
-            m_Drive.arcadeDrive(leftForward, 0);
-        } else {
-            m_Drive.arcadeDrive(leftForward, rightForward);
-        }
-
-        // m_Drive.tankDrive(leftForward, rightForward);
+        m_Drive.arcadeDrive(leftForward, rightForward);
     }
 
     /*

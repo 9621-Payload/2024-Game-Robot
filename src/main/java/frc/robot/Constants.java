@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+
 public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
@@ -27,4 +29,8 @@ public final class Constants {
   public static class ClimberBoxConstants {
     public static final int kClimberBoxMotor = 12;
   }
+
+  public static class GyroStuff(
+    public static final Constraints kAimProfile = new Constraints(3* Math.PI, 2* Math.PI);
+  )
 }
