@@ -6,12 +6,12 @@ import frc.robot.commands.*;
 
 public class DriveForward extends SequentialCommandGroup {
     public DriveForward(RobotContainer robot){
-        addCommands(new ShooterSpeakerShot(robot.GetShooter()).withTimeout(1));
+        // Shoot high
+        addCommands(new ShooterSpeakerShot(robot.GetShooter()).withTimeout(1).andThen(new ShooterFire(robot.GetShooter(), 1.0)).withTimeout(2));
 
-        addCommands(new ShooterFire(robot.GetShooter(), 1.0).withTimeout(0.5));
+        // turn around
+        addCommands(new TankRotate(robot.GetTank(), 180.0));
 
-        addCommands(new TankMove(robot.GetTank(), -1.0, -1.0).withTimeout(3));
-
-        addCommands(new TankRotate(robot.GetTank(), 45.0));
+        //addCommands(new TankMove(robot.GetTank(), -0.5, -0.5).withTimeout(4));
     }
 }

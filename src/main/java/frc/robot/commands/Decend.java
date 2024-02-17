@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberBox;
 
 public class Decend extends Command {
-    private ClimberBox s_Decend;
+    private ClimberBox m_ClimberBox;
 
     public Decend(ClimberBox Decend) {
-        this.s_Decend = Decend;
-        addRequirements(s_Decend);
+        this.m_ClimberBox = Decend;
+        addRequirements(m_ClimberBox);
         
     }
 
@@ -20,11 +20,11 @@ public class Decend extends Command {
     @Override
     public void execute(){
         /* Decend */
-        s_Decend.Decend();
+        m_ClimberBox.Decend();
     }
 
     @Override
     public void end(boolean i){
-        s_Decend.Stop();
+        m_ClimberBox.Stop();
     }
 }

@@ -18,7 +18,6 @@ public final class Constants {
     public static final int kLeftMotorPort2 = 7;
     public static final int kRightMotorPort1 = 4;
     public static final int kRightMotorPort2 = 6;
-    public static final double kDriveMultiplier = 0.8;
   }
 
   public static class ShooterConstants {

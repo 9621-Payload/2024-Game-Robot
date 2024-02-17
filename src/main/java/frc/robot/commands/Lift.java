@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ClimberBox;
 
 public class Lift extends Command {
-    private ClimberBox s_Lift;
+    private ClimberBox m_ClimberBox;
 
     public Lift(ClimberBox Lift) {
-        this.s_Lift = Lift;
-        addRequirements(s_Lift);
+        this.m_ClimberBox = Lift;
+        addRequirements(m_ClimberBox);
         
     }
 
@@ -20,11 +20,11 @@ public class Lift extends Command {
     @Override
     public void execute(){
         /* Lift */
-        s_Lift.Lift();
+        m_ClimberBox.Lift();
     }
 
     @Override
     public void end(boolean i){
-        s_Lift.Stop();
+        m_ClimberBox.Stop();
     }
 }

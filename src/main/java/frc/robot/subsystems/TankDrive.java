@@ -20,7 +20,6 @@ public class TankDrive extends SubsystemBase {
     /* Robot drive */
     private final DifferentialDrive m_Drive;
     private boolean v_driveStraight;
-    private Double v_straightValue;
 
     /* Odometry for tracking robot */
     private final AHRS m_navX;
@@ -32,11 +31,10 @@ public class TankDrive extends SubsystemBase {
         m_rightMotors.addFollower(m_rightMotorFollower);
         m_rightMotors.setInverted(true);
 
-       m_Drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
-       m_navX = new AHRS();
-       m_navX.getDisplacementX();
-       v_driveStraight = false;
-       v_straightValue = 0.0;
+        m_Drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
+        m_navX = new AHRS();
+        m_navX.getDisplacementX();
+        v_driveStraight = false;
     }
 
     /*
@@ -44,28 +42,34 @@ public class TankDrive extends SubsystemBase {
      */
     public void Move(Double leftForward, Double rightForward) {
         if (v_driveStraight) {
-            double differ = (v_straightValue - GetRotation().getAsDouble()) / 10.0;
-            m_Drive.tankDrive(Math.abs(leftForward) * TankConstants.kDriveMultiplier + differ, Math.abs(rightForward) * TankConstants.kDriveMultiplier - differ);
+            m_Drive.arcadeDrive(leftForward, 0);
         } else {
-            m_Drive.tankDrive(leftForward, rightForward);
+            m_Drive.arcadeDrive(leftForward, rightForward);
         }
+
+        // m_Drive.tankDrive(leftForward, rightForward);
     }
 
     /*
      * Rotate to a set direction
      */
     public void Rotate(Double rotation) {
-        double differ = GetRotation().getAsDouble() - rotation;
-        if (differ > 4 || differ < -180) {
-            m_Drive.arcadeDrive(0, -0.75);
-        } else if (differ < -4 || differ > 180){
-            m_Drive.arcadeDrive(0, 0.75);
-        } else {
-            m_Drive.arcadeDrive(0, -0.4 * (Math.abs(differ) / differ));
+        double v_goal = GetRotation().getAsDouble() + rotation;
+
+        while (-4 > rotation || rotation > 4) {
+            if (rotation < 0) {
+                m_Drive.arcadeDrive(0, -0.5);
+            } else if (rotation > 0) {
+                m_Drive.arcadeDrive(0, 0.5);
+            }
+
+            rotation = v_goal - GetRotation().getAsDouble();
         }
+
+        Stop();
     }
 
-    public void Stop(){
+    public void Stop() {
         m_Drive.stopMotor();
     }
 
@@ -76,26 +80,26 @@ public class TankDrive extends SubsystemBase {
         return () -> m_navX.getAngle();
     }
 
-    /* 
+    /*
      * Reset the 0 direction
      */
     public void Calibrate() {
+        m_navX.reset();
         m_navX.zeroYaw();
     }
 
-    /* 
+    /*
      * Get the NavX of the tank drive
      */
-    public AHRS GetNavX(){
+    public AHRS GetNavX() {
         return m_navX;
     }
 
-    /* 
+    /*
      * Set the straight value
      */
-    public void SetStraight(boolean value){
-        if (value != v_driveStraight){
-            v_straightValue = GetRotation().getAsDouble();
+    public void SetStraight(boolean value) {
+        if (value != v_driveStraight) {
             v_driveStraight = value;
         }
     }

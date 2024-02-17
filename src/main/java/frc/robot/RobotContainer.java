@@ -10,8 +10,6 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.ClimberBox;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -43,7 +41,6 @@ public class RobotContainer {
   private final Trigger driverupPad = c_driverController.povUp();
   private final Trigger driverrightPad = c_driverController.povRight();
   private final Trigger driverleftPad = c_driverController.povLeft();
-  private final Trigger driverY = c_driverController.y();
   private final Trigger driverLeftTriggerDepressed = new Trigger(
       () -> c_driverController.getRawAxis(2) > 0.1);
   private final Trigger operatorUpPad = c_operatorController.povUp();
@@ -61,7 +58,7 @@ public class RobotContainer {
         new TankMove(
             s_tankDrive,
             () -> c_driverController.getRawAxis(1),
-            () -> c_driverController.getRawAxis(5)));
+            () -> c_driverController.getRawAxis(4)));
 
     autoModeSelector = new AutoModeSelector(this);
 
@@ -72,11 +69,6 @@ public class RobotContainer {
 
     /* Shuffleboard setup */
     ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
-    Map<String, Object> pressureSensorMax = new HashMap<String, Object>() {
-      {
-        put("max", 120);
-      }
-    };
     //mainTab.addString("Gamepiece State", () -> s_GamePieceSelector.getCurrentGamepiece().toString()).withSize(1, 1)
     //    .withPosition(0, 0);
     mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString()).withSize(1, 1)
@@ -101,11 +93,10 @@ public class RobotContainer {
   private void configureBindings() {
     /* Driver */
     /* ====== */
-    driverDownPad.whileTrue(new TankRotate(s_tankDrive, 180.0));
-    driverupPad.whileTrue(new TankRotate(s_tankDrive, 0.0));
-    driverrightPad.whileTrue(new TankRotate(s_tankDrive, 90.0));
-    driverleftPad.whileTrue(new TankRotate(s_tankDrive, 270.0));
-    driverY.onTrue(new ZeroGyro(s_tankDrive, s_ClimberBox));
+    driverDownPad.onTrue(new TankRotate(s_tankDrive, 180.0 - (s_tankDrive.GetRotation().getAsDouble() % 360)));
+    driverupPad.onTrue(new TankRotate(s_tankDrive, 0.0 - (s_tankDrive.GetRotation().getAsDouble() % 360)));
+    driverrightPad.onTrue(new TankRotate(s_tankDrive, 90.0 -(s_tankDrive.GetRotation().getAsDouble() % 360) ));
+    driverleftPad.onTrue(new TankRotate(s_tankDrive, 270.0 - (s_tankDrive.GetRotation().getAsDouble() % 360)));
     driverLeftTriggerDepressed.whileTrue(new TankMoveStraight(s_tankDrive));
 
     /* Operator */

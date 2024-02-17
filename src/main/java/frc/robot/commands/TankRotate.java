@@ -7,7 +7,7 @@ public class TankRotate extends Command {
     private TankDrive m_Drive;
     private Double v_rotation;
 
-    public TankRotate(TankDrive m_Drive, Double v_rotation){
+    public TankRotate(TankDrive m_Drive, Double v_rotation) {
         this.m_Drive = m_Drive;
         addRequirements(m_Drive);
 
@@ -20,8 +20,9 @@ public class TankRotate extends Command {
     }
 
     @Override
-    public void execute(){
+    public void execute() {
         /* Rotate */
+        System.out.println();
         m_Drive.Rotate(v_rotation);
     }
 }
