@@ -30,7 +30,7 @@ public final class Constants {
     public static final int kClimberBoxMotor = 12;
   }
 
-  public static class GyroStuff(
+  public static class GyroStuff{
     public static final Constraints kAimProfile = new Constraints(3* Math.PI, 2* Math.PI);
-  )
+  }
 }

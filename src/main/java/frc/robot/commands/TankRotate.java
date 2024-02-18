@@ -28,8 +28,8 @@ public class TankRotate extends Command {
     @Override
     public void execute() {
         /* Rotate */
+        
         m_Drive.Move(0.0, -rotationControl.calculate(Math.toRadians(m_Drive.GetRotation().getAsDouble())));
-
     }
 
     @Override

@@ -14,6 +14,7 @@ public class ClimberBox extends SubsystemBase {
 
     /* Creates a new Shooter */
     public ClimberBox() {
+        
     }
 
     /*
