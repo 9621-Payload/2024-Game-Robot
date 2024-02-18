@@ -11,7 +11,6 @@ public class ZeroGyro extends Command {
     public ZeroGyro(TankDrive m_Drive, ClimberBox arm){
         this.m_Drive = m_Drive;
         this.arm = arm;
-        addRequirements(m_Drive);
     }
 
     @Override

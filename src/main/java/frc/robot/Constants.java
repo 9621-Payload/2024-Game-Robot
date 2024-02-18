@@ -32,5 +32,6 @@ public final class Constants {
 
   public static class GyroStuff{
     public static final Constraints kAimProfile = new Constraints(3* Math.PI, 2* Math.PI);
+    public static boolean manualArm = false;
   }
 }
