@@ -41,7 +41,7 @@ public class Shooter extends SubsystemBase {
      * Moves motors at seperate speeds to drop the note into the amp.
      */
     public void AmpShot() {
-        m_upperMotor.set(-0.185);
+        m_upperMotor.set(-0.25);
     }
 
     public void farShot() {

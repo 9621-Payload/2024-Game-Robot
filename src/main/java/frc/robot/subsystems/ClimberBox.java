@@ -21,9 +21,11 @@ public class ClimberBox extends SubsystemBase {
      * Uses tank drive to move the motors to shoot high.
      */
     public void Lift() {
-        //if (GetPos().getAsDouble() < 220) {
+        if (GetPos().getAsDouble() < 300) {
             m_WhinchMotor.set(1);
-        //}
+        } else {
+        Stop();
+        }
     }
 
     public DoubleSupplier GetPos() {
@@ -31,10 +33,11 @@ public class ClimberBox extends SubsystemBase {
     }
 
     public void Decend() {
-      //  if (GetPos().getAsDouble() > 10) {
-            m_WhinchMotor.set(-1);
-      //  }
-
+      //if (GetPos().getAsDouble() > 10) {
+            m_WhinchMotor.set(-0.2);
+      //} else {
+      //Stop();
+     // }
     }
 
     public void Zero() {

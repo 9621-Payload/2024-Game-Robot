@@ -11,6 +11,10 @@ public class ZeroGyro extends Command {
     public ZeroGyro(TankDrive m_Drive, ClimberBox arm){
         this.m_Drive = m_Drive;
         this.arm = arm;
+<<<<<<< Updated upstream
+=======
+        //addRequirements(m_Drive);
+>>>>>>> Stashed changes
     }
 
     @Override
@@ -22,6 +26,11 @@ public class ZeroGyro extends Command {
     public void execute(){
         /* Calibrate the gyro */
         m_Drive.Calibrate();
-        arm.Zero();
+        //arm.Zero();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;//
     }
 }
