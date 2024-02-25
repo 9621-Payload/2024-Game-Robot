@@ -77,8 +77,6 @@ public class RobotContainer {
         .withPosition(3, 0);
     mainTab.addDouble("Arm", s_ClimberBox.GetPos()).withSize(1, 1)
         .withPosition(4, 0);
-<<<<<<< Updated upstream
-
     mainTab.add("Manual", Constants.GyroStuff.manualArm).withSize(1, 1)
         .withPosition(0, 1);
     mainTab.add("Manual Button", new ManualArm().ignoringDisable(false)).withSize(1, 1)
@@ -87,14 +85,12 @@ public class RobotContainer {
         .withPosition(0, 2);
     mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(false)).withSize(1, 1)
         .withPosition(2, 2);
-=======
     mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
     mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(true)).withSize(2, 1).withPosition(2, 1);
     //mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading()).withSize(2, 1)
     //    .withPosition(0, 2).withWidget(BuiltInWidgets.kDial).withProperties(pressureSensorMax);
     //mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve)).withSize(2, 1).withPosition(2, 2);
     //mainTab.add("Game Field", s_tankDrive.getField()).withSize(5, 3).withPosition(4, 0);
->>>>>>> Stashed changes
 
     configureBindings();
   }
