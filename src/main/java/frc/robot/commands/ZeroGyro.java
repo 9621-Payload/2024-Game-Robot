@@ -22,11 +22,11 @@ public class ZeroGyro extends Command {
     public void execute(){
         /* Calibrate the gyro */
         m_Drive.Calibrate();
-        //arm.Zero();
+        arm.Zero();
     }
 
     @Override
     public boolean isFinished() {
-        return true;//
+        return true;
     }
 }

@@ -12,7 +12,9 @@ import frc.robot.subsystems.ClimberBox;
 
 import java.util.Map;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -72,26 +74,20 @@ public class RobotContainer {
     /* Shuffleboard setup */
     ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
     mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString()).withSize(1, 1)
-        .withPosition(1, 0);
+        .withPosition(2, 0);
     mainTab.addDouble("Gyro", () -> s_tankDrive.GetRotation().getAsDouble()).withSize(1, 1)
         .withPosition(3, 0);
     mainTab.addDouble("Arm", s_ClimberBox.GetPos()).withSize(1, 1)
         .withPosition(4, 0);
-    mainTab.add("Manual", Constants.GyroStuff.manualArm).withSize(1, 1)
+    mainTab.addInteger("Manual", () -> (Constants.GyroStuff.manualArm ? 1 : 0)).withSize(1, 1)
         .withPosition(0, 1);
     mainTab.add("Manual Button", new ManualArm().ignoringDisable(false)).withSize(1, 1)
-        .withPosition(1, 1);
+        .withPosition(1, 0);
     mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1)
         .withPosition(0, 2);
     mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(false)).withSize(1, 1)
         .withPosition(2, 2);
-    mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1).withPosition(0, 1);
-    mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(true)).withSize(2, 1).withPosition(2, 1);
-    //mainTab.addDouble("Analog Pressure Sensor", () -> PressureSensor.getAnalogPressureReading()).withSize(2, 1)
-    //    .withPosition(0, 2).withWidget(BuiltInWidgets.kDial).withProperties(pressureSensorMax);
-    //mainTab.add("Reset angle encoders", new ResetSwerveAngleEncoders(s_Swerve)).withSize(2, 1).withPosition(2, 2);
-    //mainTab.add("Game Field", s_tankDrive.getField()).withSize(5, 3).withPosition(4, 0);
-
+   
     configureBindings();
   }
 
@@ -100,7 +96,7 @@ public class RobotContainer {
     /* Driver */
     /* ====== */
     driverDownPad.onTrue(new TankRotate(s_tankDrive, 180.0 - (s_tankDrive.GetRotation().getAsDouble() % 360)));
-    driverupPad.onTrue(new TankRotate(s_tankDrive, 0.0 - (s_tankDrive.GetRotation().getAsDouble() % 360)));
+    driverupPad.onTrue(new TankRotate(s_tankDrive, -s_tankDrive.GetRotation().getAsDouble()));
     driverrightPad.onTrue(new TankRotate(s_tankDrive, 90.0 -(s_tankDrive.GetRotation().getAsDouble() % 360) ));
     driverleftPad.onTrue(new TankRotate(s_tankDrive, 270.0 - (s_tankDrive.GetRotation().getAsDouble() % 360)));
     driverLeftTriggerDepressed.whileTrue(new TankMoveStraight(s_tankDrive));
