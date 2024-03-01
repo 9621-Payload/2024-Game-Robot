@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.ClimberBoxConstants;
 
 public class ClimberBox extends SubsystemBase {
@@ -21,10 +22,10 @@ public class ClimberBox extends SubsystemBase {
      * Uses tank drive to move the motors to shoot high.
      */
     public void Lift() {
-        if (GetPos().getAsDouble() < 300) {
+        if (GetPos().getAsDouble() < 295) {
             m_WhinchMotor.set(1);
         } else {
-        Stop();
+            Stop();
         }
     }
 
@@ -33,11 +34,11 @@ public class ClimberBox extends SubsystemBase {
     }
 
     public void Decend() {
-      //if (GetPos().getAsDouble() > 10) {
+      if (GetPos().getAsDouble() > 5) {
             m_WhinchMotor.set(-0.2);
-      //} else {
-      //Stop();
-     // }
+      } else {
+      Stop();
+      }
     }
 
     public void Zero() {
