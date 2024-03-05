@@ -16,6 +16,7 @@ public class ManualArm extends Command {
     @Override
     public void execute(){
         Constants.GyroStuff.manualArm = !Constants.GyroStuff.manualArm;
+        System.out.println(String.valueOf(Constants.GyroStuff.manualArm));
     }
 
     @Override

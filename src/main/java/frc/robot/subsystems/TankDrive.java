@@ -1,9 +1,13 @@
 package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,7 +23,8 @@ public class TankDrive extends SubsystemBase {
 
     /* Robot drive */
     private final DifferentialDrive m_Drive;
-    private boolean v_driveStraight;
+    private Encoder encoderLeft;
+    private Encoder encoderRight;
 
     /* Odometry for tracking robot */
     private final AHRS m_navX;
@@ -31,17 +36,42 @@ public class TankDrive extends SubsystemBase {
         m_rightMotors.addFollower(m_rightMotorFollower);
         m_rightMotors.setInverted(true);
 
+        /* Setups the encoders */
+        encoderLeft = new Encoder(7,6, true, EncodingType.k2X);
+        encoderRight = new Encoder(9, 8, false, EncodingType.k2X);
+
+        encoderRight.setDistancePerPulse(4.86/512.0);
+        encoderLeft.setDistancePerPulse(4.86/512.0);
+
+        // Configures the encoder to consider itself stopped when its rate is below 10
+        //encoderRight.setMinRate(10);
+
+        // Configures an encoder to average its period measurement over 5 samples
+        // Can be between 1 and 127 samples
+        encoderRight.setSamplesToAverage(5);
+        encoderLeft.setSamplesToAverage(5);
+
         m_Drive = new DifferentialDrive(m_leftMotors, m_rightMotors);
         m_navX = new AHRS();
         m_navX.getDisplacementX();
-        v_driveStraight = false;
     }
 
     /*
      * Drives the robot using tank controls.
      */
-    public void Move(Double leftForward, Double rightForward) {
-        m_Drive.arcadeDrive(leftForward, rightForward);
+    public void Move(Double forward, Double rotate) {
+        m_Drive.arcadeDrive(forward, rotate);
+    }
+
+    public void MoveDis(Double dis) {
+        while (encoderLeft.getDistance() <= (dis - 2) || encoderLeft.getDistance() >= (dis + 2)) {
+            if (encoderLeft.getDistance() < dis){
+                m_Drive.arcadeDrive(-0.7, 0);
+            } else {
+                m_Drive.arcadeDrive(0.7, 0);
+            }
+        }
+        Stop();
     }
 
     /*
@@ -74,12 +104,26 @@ public class TankDrive extends SubsystemBase {
         return () -> m_navX.getAngle();
     }
 
+    public DoubleSupplier GetRightEncoder() {
+        return () -> encoderRight.getDistance();
+    }
+    public DoubleSupplier GetLeftEncoder() {
+        return () -> encoderLeft.getDistance();
+    }
+
     /*
      * Reset the 0 direction
      */
     public void Calibrate() {
         m_navX.reset();
         m_navX.zeroYaw();
+        encoderRight.reset();
+        encoderLeft.reset();
+    }
+
+    public void ResetEncode() {
+        encoderLeft.reset();
+        encoderRight.reset();
     }
 
     /*
@@ -87,14 +131,5 @@ public class TankDrive extends SubsystemBase {
      */
     public AHRS GetNavX() {
         return m_navX;
-    }
-
-    /*
-     * Set the straight value
-     */
-    public void SetStraight(boolean value) {
-        if (value != v_driveStraight) {
-            v_driveStraight = value;
-        }
     }
 }

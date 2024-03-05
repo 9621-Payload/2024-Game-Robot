@@ -28,6 +28,7 @@ public final class Constants {
   }
   public static class ClimberBoxConstants {
     public static final int kClimberBoxMotor = 12;
+    public static final int kArmMax = 295;
   }
 
   public static class GyroStuff{

@@ -14,7 +14,11 @@ public class AutoModeSelector {
         /*
          * Add all the options
          */
-        autoModeChooser.addOption("Center Drive Forward", DriveForward(container));
+        autoModeChooser.addOption("Drive Forward", DriveForward(container));
+        autoModeChooser.addOption("Speaker Center", SpeakerCenter(container));
+        autoModeChooser.addOption("Speaker Left", SpeakerLeft(container));
+        autoModeChooser.addOption("Speaker Right", SpeakerRight(container));
+        autoModeChooser.addOption("Just Shoot", JustShoot(container));
     }
 
     public SendableChooser<Command> getAutoChooser() {
@@ -32,6 +36,18 @@ public class AutoModeSelector {
      */
     private SequentialCommandGroup DriveForward(RobotContainer container) {
         return new DriveForward(container);
+    }
+    private SequentialCommandGroup JustShoot(RobotContainer container) {
+        return new JustShoot(container);
+    }
+    private SequentialCommandGroup SpeakerCenter(RobotContainer container) {
+        return new SpeakerCenter(container);
+    }
+    private SequentialCommandGroup SpeakerRight(RobotContainer container) {
+        return new SpeakerRight(container);
+    }
+    private SequentialCommandGroup SpeakerLeft(RobotContainer container) {
+        return new SpeakerLeft(container);
     }
 
 }

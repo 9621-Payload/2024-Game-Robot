@@ -8,7 +8,7 @@ import frc.robot.subsystems.TankDrive;
 public class TankRotate extends Command {
     private TankDrive m_Drive;
     private Double v_rotation;
-    private ProfiledPIDController rotationControl = new ProfiledPIDController(0.3, 0, 0, GyroStuff.kAimProfile);
+    private ProfiledPIDController rotationControl = new ProfiledPIDController(0.6, 0.15, 0, GyroStuff.kAimProfile);
 
     public TankRotate(TankDrive m_Drive, Double v_rotation) {
         this.m_Drive = m_Drive;
@@ -28,7 +28,7 @@ public class TankRotate extends Command {
     @Override
     public void execute() {
         /* Rotate */
-        m_Drive.Move(0.0, -rotationControl.calculate(Math.toRadians(m_Drive.GetRotation().getAsDouble())));
+        m_Drive.Move(0.0, rotationControl.calculate(Math.toRadians(m_Drive.GetRotation().getAsDouble())));
     }
 
     @Override

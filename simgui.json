@@ -1,5 +1,20 @@
 {
   "HALProvider": {
+    "DIO": {
+      "window": {
+        "visible": true
+      }
+    },
+    "Encoders": {
+      "1": {
+        "header": {
+          "open": true
+        }
+      },
+      "window": {
+        "visible": true
+      }
+    },
     "Other Devices": {
       "ADXRS450[0]": {
         "header": {
@@ -22,18 +37,24 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Main/AutoMode": "String Chooser",
-      "/Shuffleboard/Main/Gyro zero": "Command"
+      "/Shuffleboard/Main/Gyro zero": "Command",
+      "/Shuffleboard/Main/Zero": "Command"
     }
   },
   "NetworkTables": {
-    "Persistent Values": {
-      "open": false
-    },
-    "Retained Values": {
-      "open": false
+    "retained": {
+      "Shuffleboard": {
+        "Main": {
+          "open": true
+        },
+        "open": true
+      }
     },
     "transitory": {
       "FMSInfo": {
+        "open": true
+      },
+      "Shuffleboard": {
         "open": true
       }
     }
@@ -41,6 +62,7 @@
   "NetworkTables Info": {
     "shuffleboard@1": {
       "open": true
-    }
+    },
+    "visible": true
   }
 }

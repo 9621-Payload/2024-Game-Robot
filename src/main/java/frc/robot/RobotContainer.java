@@ -50,6 +50,7 @@ public class RobotContainer {
   private final Trigger operatorUpPad = c_operatorController.povUp();
   private final Trigger operatorY = c_operatorController.y();
   private final Trigger operatorA = c_operatorController.a();
+  private final Trigger operatorBack = c_operatorController.back();
 
   private AutoModeSelector autoModeSelector;
 
@@ -79,14 +80,16 @@ public class RobotContainer {
         .withPosition(3, 0);
     mainTab.addDouble("Arm", s_ClimberBox.GetPos()).withSize(1, 1)
         .withPosition(4, 0);
-    mainTab.addInteger("Manual", () -> (Constants.GyroStuff.manualArm ? 1 : 0)).withSize(1, 1)
-        .withPosition(0, 1);
-    mainTab.add("Manual Button", new ManualArm().ignoringDisable(false)).withSize(1, 1)
-        .withPosition(1, 0);
+
     mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1)
-        .withPosition(0, 2);
-    mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(false)).withSize(1, 1)
-        .withPosition(2, 2);
+        .withPosition(0, 1);
+    mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(true)).withSize(1, 1)
+        .withPosition(2, 1);
+
+    mainTab.addDouble("Right", s_tankDrive.GetRightEncoder()).withSize(1, 1)
+        .withPosition(3, 1);
+    mainTab.addDouble("Left", s_tankDrive.GetLeftEncoder()).withSize(1, 1)
+        .withPosition(4, 1);
    
     configureBindings();
   }
@@ -95,11 +98,11 @@ public class RobotContainer {
   private void configureBindings() {
     /* Driver */
     /* ====== */
-    driverDownPad.onTrue(new TankRotate(s_tankDrive, 180.0 - (s_tankDrive.GetRotation().getAsDouble() % 360)));
-    driverupPad.onTrue(new TankRotate(s_tankDrive, -s_tankDrive.GetRotation().getAsDouble()));
-    driverrightPad.onTrue(new TankRotate(s_tankDrive, 90.0 -(s_tankDrive.GetRotation().getAsDouble() % 360) ));
-    driverleftPad.onTrue(new TankRotate(s_tankDrive, 270.0 - (s_tankDrive.GetRotation().getAsDouble() % 360)));
-    driverLeftTriggerDepressed.whileTrue(new TankMoveStraight(s_tankDrive));
+    driverDownPad.onTrue(new TankRotate(s_tankDrive, 180.0).withTimeout(3));
+    driverupPad.onTrue(new TankRotate(s_tankDrive, 0.0).withTimeout(3));
+    driverrightPad.onTrue(new TankRotate(s_tankDrive, 90.0).withTimeout(3));
+    driverleftPad.onTrue(new TankRotate(s_tankDrive, -90.0).withTimeout(3));
+    //driverLeftTriggerDepressed.whileTrue(new TankMoveStraight(s_tankDrive));
 
     /* Operator */
     /* ======== */
@@ -108,9 +111,11 @@ public class RobotContainer {
         new ShooterSpeakerShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 1.0)).withTimeout(2));
     operatorRightBumper
         .onTrue(new ShooterAmpShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 0.6).withTimeout(1.4)));
-    operatorUpPad.whileTrue(new ShooterFarShot(s_Shooter));
-    operatorA.whileTrue(new Decend(s_ClimberBox));
+    //operatorUpPad.whileTrue(new ShooterFarShot(s_Shooter));
+    //operatorA.whileTrue(new Decend(s_ClimberBox));
+    //operatorA.onTrue(new TankMoveAuto(s_tankDrive));
     operatorY.whileTrue(new Lift(s_ClimberBox));
+    operatorBack.onTrue(new ManualArm());
   }
 
   public TankDrive GetTank(){
