@@ -1,14 +1,12 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.GyroStuff;
 import frc.robot.subsystems.TankDrive;
 
 public class TankMoveAuto extends Command {
     private TankDrive m_Drive;
     private Double distancevalue;
-    private ProfiledPIDController rotationControl = new ProfiledPIDController(0.7, 0, 0, GyroStuff.kAimProfile);
+    //private ProfiledPIDController rotationControl = new ProfiledPIDController(0.7, 0, 0, GyroStuff.kAimProfile);
 
     public TankMoveAuto (TankDrive m_Drive, Double distancevalue) {
         this.m_Drive = m_Drive;

@@ -9,12 +9,6 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TankDrive;
 import frc.robot.subsystems.ClimberBox;
-
-import java.util.Map;
-
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -45,9 +39,9 @@ public class RobotContainer {
   private final Trigger driverupPad = c_driverController.povUp();
   private final Trigger driverrightPad = c_driverController.povRight();
   private final Trigger driverleftPad = c_driverController.povLeft();
-  private final Trigger driverLeftTriggerDepressed = new Trigger(
-      () -> c_driverController.getRawAxis(2) > 0.1);
-  private final Trigger operatorUpPad = c_operatorController.povUp();
+  //private final Trigger driverLeftTriggerDepressed = new Trigger(
+  //    () -> c_driverController.getRawAxis(2) > 0.1);
+  //private final Trigger operatorUpPad = c_operatorController.povUp();
   private final Trigger operatorY = c_operatorController.y();
   private final Trigger operatorA = c_operatorController.a();
   private final Trigger operatorBack = c_operatorController.back();
@@ -74,7 +68,7 @@ public class RobotContainer {
 
     /* Shuffleboard setup */
     ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
-    mainTab.addString("Alliance", () -> DriverStation.getAlliance().toString()).withSize(1, 1)
+    mainTab.addString("Alliance", () -> DriverStation.getAlliance().get().name()).withSize(1, 1)
         .withPosition(2, 0);
     mainTab.addDouble("Gyro", () -> s_tankDrive.GetRotation().getAsDouble()).withSize(1, 1)
         .withPosition(3, 0);
@@ -82,14 +76,19 @@ public class RobotContainer {
         .withPosition(4, 0);
 
     mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1)
-        .withPosition(0, 1);
+        .withPosition(0, 0);
     mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(true)).withSize(1, 1)
-        .withPosition(2, 1);
+        .withPosition(4, 1);
+
+    //mainTab.addCamera("Camera", "USB Camera 0", null); => TODO: Get camera url
+    
 
     mainTab.addDouble("Right", s_tankDrive.GetRightEncoder()).withSize(1, 1)
-        .withPosition(3, 1);
+        .withPosition(1, 1);
     mainTab.addDouble("Left", s_tankDrive.GetLeftEncoder()).withSize(1, 1)
-        .withPosition(4, 1);
+        .withPosition(0, 1);
+    mainTab.addDouble("Center", s_tankDrive.GetEncoderDistance()).withSize(1, 1)
+        .withPosition(2, 1);
    
     configureBindings();
   }
@@ -112,8 +111,7 @@ public class RobotContainer {
     operatorRightBumper
         .onTrue(new ShooterAmpShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 0.6).withTimeout(1.4)));
     //operatorUpPad.whileTrue(new ShooterFarShot(s_Shooter));
-    //operatorA.whileTrue(new Decend(s_ClimberBox));
-    //operatorA.onTrue(new TankMoveAuto(s_tankDrive));
+    operatorA.whileTrue(new Decend(s_ClimberBox));
     operatorY.whileTrue(new Lift(s_ClimberBox));
     operatorBack.onTrue(new ManualArm());
   }
