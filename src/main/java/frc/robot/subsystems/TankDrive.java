@@ -1,9 +1,6 @@
 package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
-import java.util.function.IntSupplier;
-import java.util.function.LongSupplier;
-
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -12,7 +9,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TankConstants;
-import java.lang.Math;
 
 public class TankDrive extends SubsystemBase {
     /* Motor controllers to move the tank */
@@ -64,7 +60,7 @@ public class TankDrive extends SubsystemBase {
     }
 
     public void MoveDis(Double dis) {
-        while (encoderLeft.getDistance() <= (dis - 2) || encoderLeft.getDistance() >= (dis + 2)) {
+        while (GetEncoderDistance().getAsDouble() <= (dis - 2) || GetEncoderDistance().getAsDouble() >= (dis + 2)) {
             if (encoderLeft.getDistance() < dis){
                 m_Drive.arcadeDrive(-0.7, 0);
             } else {
@@ -109,6 +105,13 @@ public class TankDrive extends SubsystemBase {
     }
     public DoubleSupplier GetLeftEncoder() {
         return () -> encoderLeft.getDistance();
+    }
+
+    /* 
+     * Get the average of the encoder for straight driving
+     */
+    public DoubleSupplier GetEncoderDistance() {
+        return () -> ((encoderLeft.getDistance() + encoderRight.getDistance()) / 2);
     }
 
     /*
