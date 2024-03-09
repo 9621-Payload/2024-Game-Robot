@@ -35,4 +35,27 @@ public final class Constants {
     public static final Constraints kAimProfile = new Constraints(3* Math.PI, 2* Math.PI);
     public static boolean manualArm = false;
   }
+
+  public static class AutoContstants {
+    public static final double kJitterTime = 1.0;
+    public static final double kJitterDistance = 8.0;
+
+    public static final double kFinalHeading = 0.0;
+
+    public static final double kFireTime = 2.0;
+    public static final double kPrepareTime = 1.0;
+
+    public static final double kBackupDistance = -10.0;
+    public static final double kBackupTime = 1.0;
+
+    public static final double kSpeakerSideTurnTime = 4.5;
+    public static final double kSpeakerSideForwardDistance = 74;
+    public static final double kSpeakerSideForwardTime = 3.5;
+
+    public static final double kSpeakerFrontForwardDistance = 7;
+    public static final double kSpeakerFrontTurnTime = 6.5;
+    public static final double kSpeakerFrontForwardTime = 3.5;
+    
+    public static final double kOnlyForwardDistance = 76.0; 
+  }
 }

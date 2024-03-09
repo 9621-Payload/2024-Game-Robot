@@ -2,6 +2,7 @@ package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.AutoContstants;
 import frc.robot.commands.*;
 
 public class JustShoot extends SequentialCommandGroup {
@@ -9,10 +10,10 @@ public class JustShoot extends SequentialCommandGroup {
         robot.GetTank().ResetEncode();
 
         // jerk forward
-        addCommands(new TankMoveAuto(robot.GetTank(), -10.0).withTimeout(0.5));
-        addCommands(new TankMoveAuto(robot.GetTank(), 10.0).withTimeout(0.5));
+        addCommands(new TankMoveAuto(robot.GetTank(), -AutoContstants.kJitterDistance).withTimeout(AutoContstants.kJitterTime));
+        addCommands(new TankMoveAuto(robot.GetTank(), AutoContstants.kJitterDistance).withTimeout(AutoContstants.kJitterTime));
 
         // Shoot high
-        addCommands(new ShooterSpeakerShot(robot.GetShooter()).withTimeout(1).andThen(new ShooterFire(robot.GetShooter(), 1.0)).withTimeout(2));
+        addCommands(new ShooterSpeakerShot(robot.GetShooter()).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(robot.GetShooter(), 1.0)).withTimeout(AutoContstants.kFireTime));
     }
 }
