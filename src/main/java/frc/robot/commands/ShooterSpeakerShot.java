@@ -9,8 +9,8 @@ public class ShooterSpeakerShot extends Command {
     public ShooterSpeakerShot(Shooter shooter) {
         this.s_Shooter = shooter;
         addRequirements(shooter);
-        
     }
+
 
     @Override
     public void initialize() {

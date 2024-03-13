@@ -38,17 +38,17 @@ public final class Constants {
 
   public static class AutoContstants {
     public static final double kJitterTime = 1.0;
-    public static final double kJitterDistance = 8.0;
+    public static final double kJitterDistance = 20.0;
 
     public static final double kFinalHeading = 0.0;
 
-    public static final double kFireTime = 2.0;
-    public static final double kPrepareTime = 1.0;
+    public static final double kFireTime = 4.0;
+    public static final double kPrepareTime = 2.0;
 
-    public static final double kBackupDistance = -10.0;
+    public static final double kBackupDistance = -15.0;
     public static final double kBackupTime = 1.0;
 
-    public static final double kSpeakerSideTurnTime = 4.5;
+    public static final double kSpeakerSideTurnTime = 2.5;
     public static final double kSpeakerSideForwardDistance = 74;
     public static final double kSpeakerSideForwardTime = 3.5;
 

@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   /* Subsystems */
-  private final TankDrive s_tankDrive = new TankDrive();
+  private final TankDrive s_tankDrive;
   private final Shooter s_Shooter = new Shooter();
   private final ClimberBox s_ClimberBox = new ClimberBox();
 
@@ -31,9 +31,9 @@ public class RobotContainer {
 
   /* Triggers/Buttons */
   private final Trigger operatorLeftTriggerDepressed = new Trigger(
-      () -> c_operatorController.getRawAxis(2) > 0.1);
+      () -> c_operatorController.getLeftTriggerAxis() > 0.1);
   private final Trigger operatorRightTriggerDepressed = new Trigger(
-      () -> c_operatorController.getRawAxis(3) > 0.1);
+      () -> c_operatorController.getRightTriggerAxis() > 0.1);
   private final Trigger operatorRightBumper = c_operatorController.rightBumper();
   private final Trigger driverDownPad = c_driverController.povDown();
   private final Trigger driverupPad = c_driverController.povUp();
@@ -52,12 +52,14 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    s_tankDrive = new TankDrive();
+
     /* Setup the default command -> moving */
     s_tankDrive.setDefaultCommand(
         new TankMove(
             s_tankDrive,
-            () -> c_driverController.getRawAxis(1),
-            () -> c_driverController.getRawAxis(4)));
+            () -> c_driverController.getLeftY(),
+            () -> c_driverController.getRightX()));
 
     autoModeSelector = new AutoModeSelector(this);
 
@@ -107,7 +109,7 @@ public class RobotContainer {
     /* ======== */
     operatorLeftTriggerDepressed.whileTrue(new ShooterIntake(s_Shooter));
     operatorRightTriggerDepressed.onTrue(
-        new ShooterSpeakerShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 1.0)).withTimeout(2));
+        new ShooterSpeakerShot(s_Shooter).withTimeout(2).andThen(new ShooterFire(s_Shooter, 1.0)).withTimeout(4));
     operatorRightBumper
         .onTrue(new ShooterAmpShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 0.6).withTimeout(1.4)));
     //operatorUpPad.whileTrue(new ShooterFarShot(s_Shooter));

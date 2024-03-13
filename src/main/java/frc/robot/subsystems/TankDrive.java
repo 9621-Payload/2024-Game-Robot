@@ -1,14 +1,21 @@
 package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
+import java.util.function.IntSupplier;
+import java.util.function.LongSupplier;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.TankConstants;
+import java.lang.Math;
 
 public class TankDrive extends SubsystemBase {
     /* Motor controllers to move the tank */
@@ -16,6 +23,9 @@ public class TankDrive extends SubsystemBase {
     private PWMSparkMax m_leftMotors = new PWMSparkMax(TankConstants.kLeftMotorPort2);
     private PWMSparkMax m_rightMotorFollower = new PWMSparkMax(TankConstants.kRightMotorPort2);
     private PWMSparkMax m_rightMotors = new PWMSparkMax(TankConstants.kRightMotorPort1);
+
+    public PIDController disController = new PIDController(0.1, 0, 0);
+
 
     /* Robot drive */
     private final DifferentialDrive m_Drive;
@@ -27,6 +37,7 @@ public class TankDrive extends SubsystemBase {
 
     /* Creates a new TankDrive */
     public TankDrive() {
+
         /* Sets the motors up and add the followers */
         m_leftMotors.addFollower(m_leftMotorFollower);
         m_rightMotors.addFollower(m_rightMotorFollower);
@@ -60,34 +71,20 @@ public class TankDrive extends SubsystemBase {
     }
 
     public void MoveDis(Double dis) {
-        while (GetEncoderDistance().getAsDouble() <= (dis - 2) || GetEncoderDistance().getAsDouble() >= (dis + 2)) {
-            if (encoderLeft.getDistance() < dis){
-                m_Drive.arcadeDrive(-0.7, 0);
-            } else {
-                m_Drive.arcadeDrive(0.7, 0);
-            }
-        }
-        Stop();
+    //     if (encoderLeft.getDistance() < dis){
+    //         m_Drive.arcadeDrive(-0.7, 0);
+    //     } else {
+    //         m_Drive.arcadeDrive(0.7, 0);
+    //     }
+
+        //disController.setSetpoint(dis);
+
+        double moveSpeed = disController.calculate(GetEncoderDistance().getAsDouble());
+        m_Drive.arcadeDrive(-moveSpeed, 0);
+
     }
 
-    /*
-     * Rotate to a set direction
-     */
-    public void Rotate(Double rotation) {
-        double v_goal = GetRotation().getAsDouble() + rotation;
 
-        while (-4 > rotation || rotation > 4) {
-            if (rotation < 0) {
-                m_Drive.arcadeDrive(0, -0.5);
-            } else if (rotation > 0) {
-                m_Drive.arcadeDrive(0, 0.5);
-            }
-
-            rotation = v_goal - GetRotation().getAsDouble();
-        }
-
-        Stop();
-    }
 
     public void Stop() {
         m_Drive.stopMotor();
@@ -108,11 +105,16 @@ public class TankDrive extends SubsystemBase {
     }
 
     /* 
-     * Get the average of the encoder for straight driving
-     */
-    public DoubleSupplier GetEncoderDistance() {
-        return () -> ((encoderLeft.getDistance() + encoderRight.getDistance()) / 2);
-    }
+
+    * Get the average of the encoder for straight driving
+
+    */
+
+   public DoubleSupplier GetEncoderDistance() {
+
+       return () -> ((encoderLeft.getDistance() + encoderRight.getDistance()) / 2);
+
+   }
 
     /*
      * Reset the 0 direction

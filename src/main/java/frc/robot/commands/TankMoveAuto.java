@@ -1,26 +1,30 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.GyroStuff;
 import frc.robot.subsystems.TankDrive;
 
 public class TankMoveAuto extends Command {
     private TankDrive m_Drive;
     private Double distancevalue;
-    //private ProfiledPIDController rotationControl = new ProfiledPIDController(0.7, 0, 0, GyroStuff.kAimProfile);
+    //private ProfiledPIDController rotationControl = new ProfiledPIDController(0.4, 0, 0, GyroStuff.kAimProfile);
+    private final PIDController disController;
 
     public TankMoveAuto (TankDrive m_Drive, Double distancevalue) {
         this.m_Drive = m_Drive;
         addRequirements(m_Drive);
 
+        this.disController = m_Drive.disController;
+
         this.distancevalue = distancevalue;
-        //rotationControl.setTolerance(1);
-        //rotationControl.enableContinuousInput(0, 2 * Math.PI);
     }
 
     @Override
     public void initialize() {
-        //rotationControl.reset(Math.toRadians(m_Drive.GetRotation().getAsDouble()), 0);
-        //rotationControl.setGoal(Math.toRadians(v_rotation));
+        disController.reset();
+        disController.setSetpoint(m_Drive.GetEncoderDistance().getAsDouble() + distancevalue);
     }
 
     @Override
@@ -32,5 +36,11 @@ public class TankMoveAuto extends Command {
     @Override
     public void end(boolean a){
         m_Drive.Stop();
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+        //return !(m_Drive.GetEncoderDistance().getAsDouble() <= (distancevalue - 2) || m_Drive.GetEncoderDistance().getAsDouble() >= (distancevalue + 2));
     }
 }
