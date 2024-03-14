@@ -15,8 +15,10 @@ public class ManualArm extends Command {
 
     @Override
     public void execute(){
-        Constants.GyroStuff.manualArm = !Constants.GyroStuff.manualArm;
-        System.out.println(String.valueOf(Constants.GyroStuff.manualArm));
+        /* Change the value of manual arm  */
+        Constants.GyroStuff.kManualArm = !Constants.GyroStuff.kManualArm;
+        /* Output to the drive team */
+        System.out.println((Constants.GyroStuff.kManualArm ? "You can move manually": "You cannot move manually"));
     }
 
     @Override

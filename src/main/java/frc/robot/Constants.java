@@ -28,12 +28,13 @@ public final class Constants {
   }
   public static class ClimberBoxConstants {
     public static final int kClimberBoxMotor = 12;
-    public static final int kArmMax = 295;
+    public static final double kMaxHeight = 295;
+    public static final double kMinHeight = 5.0;
   }
 
   public static class GyroStuff{
     public static final Constraints kAimProfile = new Constraints(3* Math.PI, 2* Math.PI);
-    public static boolean manualArm = false;
+    public static boolean kManualArm = false;
   }
 
   public static class AutoContstants {

@@ -7,12 +7,7 @@ import frc.robot.commands.*;
 
 public class JustShoot extends SequentialCommandGroup {
     public JustShoot(RobotContainer robot){
-        robot.GetTank().ResetEncode();
-
-        // // jerk forward
-        // addCommands(new TankMoveAuto(robot.GetTank(), -AutoContstants.kJitterDistance).withTimeout(AutoContstants.kJitterTime));
-        // addCommands(new TankMoveAuto(robot.GetTank(), AutoContstants.kJitterDistance).withTimeout(AutoContstants.kJitterTime));
-
+        // Slight fire and intake to drop the robots lip
         addCommands(new ShooterAmpShot(robot.GetShooter(), 0.17).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(robot.GetShooter(), 0.5)).withTimeout(2.5));
         addCommands(new ShooterIntake(robot.GetShooter()).withTimeout(1));
 

@@ -1,9 +1,6 @@
 package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
-import java.util.function.IntSupplier;
-import java.util.function.LongSupplier;
-
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
@@ -12,10 +9,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.TankConstants;
-import java.lang.Math;
 
 public class TankDrive extends SubsystemBase {
     /* Motor controllers to move the tank */
@@ -24,8 +18,8 @@ public class TankDrive extends SubsystemBase {
     private PWMSparkMax m_rightMotorFollower = new PWMSparkMax(TankConstants.kRightMotorPort2);
     private PWMSparkMax m_rightMotors = new PWMSparkMax(TankConstants.kRightMotorPort1);
 
+    /* PID Controller for distance */
     public PIDController disController = new PIDController(0.1, 0, 0);
-
 
     /* Robot drive */
     private final DifferentialDrive m_Drive;
@@ -47,11 +41,9 @@ public class TankDrive extends SubsystemBase {
         encoderLeft = new Encoder(7,6, true, EncodingType.k2X);
         encoderRight = new Encoder(9, 8, false, EncodingType.k2X);
 
+        /* Sets the distance per pulse on our encoders */
         encoderRight.setDistancePerPulse(4.86/512.0);
         encoderLeft.setDistancePerPulse(4.86/512.0);
-
-        // Configures the encoder to consider itself stopped when its rate is below 10
-        //encoderRight.setMinRate(10);
 
         // Configures an encoder to average its period measurement over 5 samples
         // Can be between 1 and 127 samples
@@ -70,22 +62,17 @@ public class TankDrive extends SubsystemBase {
         m_Drive.arcadeDrive(forward, rotate);
     }
 
+    /*
+     * Drives the robot a certain distance 
+     */
     public void MoveDis(Double dis) {
-    //     if (encoderLeft.getDistance() < dis){
-    //         m_Drive.arcadeDrive(-0.7, 0);
-    //     } else {
-    //         m_Drive.arcadeDrive(0.7, 0);
-    //     }
-
-        //disController.setSetpoint(dis);
-
         double moveSpeed = disController.calculate(GetEncoderDistance().getAsDouble());
         m_Drive.arcadeDrive(-moveSpeed, 0);
-
     }
 
-
-
+    /*
+     * Stop the motors
+     */
     public void Stop() {
         m_Drive.stopMotor();
     }
@@ -97,6 +84,9 @@ public class TankDrive extends SubsystemBase {
         return () -> m_navX.getAngle();
     }
 
+    /*
+     * The encoder values for each side
+     */
     public DoubleSupplier GetRightEncoder() {
         return () -> encoderRight.getDistance();
     }
@@ -105,19 +95,14 @@ public class TankDrive extends SubsystemBase {
     }
 
     /* 
-
     * Get the average of the encoder for straight driving
-
     */
-
    public DoubleSupplier GetEncoderDistance() {
-
        return () -> ((encoderLeft.getDistance() + encoderRight.getDistance()) / 2);
-
    }
 
     /*
-     * Reset the 0 direction
+     * Reset everything 
      */
     public void Calibrate() {
         m_navX.reset();
@@ -126,6 +111,9 @@ public class TankDrive extends SubsystemBase {
         encoderLeft.reset();
     }
 
+    /*
+     * Reset just the encoders
+     */
     public void ResetEncode() {
         encoderLeft.reset();
         encoderRight.reset();

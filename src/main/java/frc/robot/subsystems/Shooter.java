@@ -15,14 +15,14 @@ public class Shooter extends SubsystemBase {
     }
 
     /*
-     * Uses tank drive to move the motors to shoot high.
+     * Spins the top motoro full speed for speaker shot
      */
     public void SpeakerShot() {
         m_upperMotor.set(-1);
     }
 
     /*
-     * Uses tank drive to move the motors to shoot high.
+     * Spins the bottom motor to launch the note
      */
     public void Fire(Double speed) {
         m_lowerMotor.set(-speed);
@@ -30,7 +30,7 @@ public class Shooter extends SubsystemBase {
 
 
     /*
-     * Uses tank drive to move the motors to bring in the note in.
+     * Spins both motors reverse to intake the note
      */
     public void Intake() {
         m_lowerMotor.set(0.7);
@@ -38,16 +38,18 @@ public class Shooter extends SubsystemBase {
     }
 
     /*
-     * Moves motors at seperate speeds to drop the note into the amp.
+     * Spins the top motor enouch to drop the note
      */
     public void AmpShot(double speed) {
         m_upperMotor.set(-speed);
     }
 
+    /* Moksh did this, idk but is the same as SpeakerShot */
     public void farShot() {
         m_upperMotor.set(-1.0);
     }
 
+    /* Stop the motors for the shooter */
     public void stop(){
         m_upperMotor.set(0);
         m_lowerMotor.set(0);

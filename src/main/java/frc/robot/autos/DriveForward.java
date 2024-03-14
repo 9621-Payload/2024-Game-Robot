@@ -7,7 +7,7 @@ import frc.robot.commands.*;
 
 public class DriveForward extends SequentialCommandGroup {
     public DriveForward(RobotContainer robot){
-        // Move forward 52 inches
+        // Move forward 76 inches
         addCommands(new TankMoveAuto(robot.GetTank(), AutoContstants.kOnlyForwardDistance).withTimeout(6.5));
     }
 }

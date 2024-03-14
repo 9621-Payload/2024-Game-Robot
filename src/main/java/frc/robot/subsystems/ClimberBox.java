@@ -19,42 +19,52 @@ public class ClimberBox extends SubsystemBase {
     }
 
     /*
-     * Uses tank drive to move the motors to shoot high.
+     * Spins the winch to extend the rope untill we reach max hieght 
      */
     public void Lift() {
-        if (!Constants.GyroStuff.manualArm){
-            if (GetPos().getAsDouble() < Constants.ClimberBoxConstants.kArmMax) {
+        if (!Constants.GyroStuff.kManualArm){
+            if (GetPos().getAsDouble() < Constants.ClimberBoxConstants.kMaxHeight) {
                 m_WhinchMotor.set(1);
             } else {
                 Stop();
             }
         } else {
             m_WhinchMotor.set(1);
-            //Stop();
         }
     }
 
+    /* 
+     * Get the position of the arm movement
+     */
     public DoubleSupplier GetPos() {
         return () -> m_WhinchMotor.getEncoder().getPosition();
     }
 
+    /*
+     * Spins the winch to shorten the rope untill we reach min height
+     */
     public void Decend() {
-        if (!Constants.GyroStuff.manualArm){
-            if (GetPos().getAsDouble() > 5) {
+        if (!Constants.GyroStuff.kManualArm){
+            if (GetPos().getAsDouble() > Constants.ClimberBoxConstants.kMinHeight) {
                 m_WhinchMotor.set(-1);
             } else {
                 Stop();
             }
         } else {
             m_WhinchMotor.set(-1);
-            //Stop();
         }
     }
 
+    /*
+     * Zero the winch encoders
+     */
     public void Zero() {
         m_WhinchMotor.getEncoder().setPosition(0);
     }
 
+    /*
+     * Stops the winch motor
+     */
     public void Stop() {
         m_WhinchMotor.set(0);
     }

@@ -19,7 +19,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   /* Subsystems */
-  private final TankDrive s_tankDrive;
+  private final TankDrive s_tankDrive = new TankDrive();
   private final Shooter s_Shooter = new Shooter();
   private final ClimberBox s_ClimberBox = new ClimberBox();
 
@@ -46,14 +46,13 @@ public class RobotContainer {
   private final Trigger operatorA = c_operatorController.a();
   private final Trigger operatorBack = c_operatorController.back();
 
+  /* Autonomous selector */
   private AutoModeSelector autoModeSelector;
 
   /*
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    s_tankDrive = new TankDrive();
-
     /* Setup the default command -> moving */
     s_tankDrive.setDefaultCommand(
         new TankMove(
@@ -61,6 +60,7 @@ public class RobotContainer {
             () -> c_driverController.getLeftY(),
             () -> c_driverController.getRightX()));
 
+    /* Create a new auto mode selector */
     autoModeSelector = new AutoModeSelector(this);
 
     /* Register the subsystems */
@@ -76,21 +76,20 @@ public class RobotContainer {
         .withPosition(3, 0);
     mainTab.addDouble("Arm", s_ClimberBox.GetPos()).withSize(1, 1)
         .withPosition(4, 0);
-
     mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1)
         .withPosition(0, 0);
+
     mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(true)).withSize(1, 1)
         .withPosition(4, 1);
-
-    //mainTab.addCamera("Camera", "USB Camera 0", null); => TODO: Get camera url
-    
-
     mainTab.addDouble("Right", s_tankDrive.GetRightEncoder()).withSize(1, 1)
         .withPosition(1, 1);
     mainTab.addDouble("Left", s_tankDrive.GetLeftEncoder()).withSize(1, 1)
         .withPosition(0, 1);
     mainTab.addDouble("Center", s_tankDrive.GetEncoderDistance()).withSize(1, 1)
         .withPosition(2, 1);
+
+        
+    //mainTab.addCamera("Camera", "USB Camera 0", null); => TODO: Get camera url
    
     configureBindings();
   }
@@ -118,14 +117,17 @@ public class RobotContainer {
     operatorBack.onTrue(new ManualArm());
   }
 
+  /* Return the robots tank drive */
   public TankDrive GetTank(){
     return s_tankDrive;
   }
 
+  /* returns the robots shooter */
   public Shooter GetShooter(){
     return s_Shooter;
   }
 
+  /* Get the selected auto command */
   public Command getAutonomousCommand() {
     return autoModeSelector.getAutoChooser().getSelected();
 }
