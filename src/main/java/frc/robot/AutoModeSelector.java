@@ -27,7 +27,7 @@ public class AutoModeSelector {
 
     private SequentialCommandGroup doNothingCommand(RobotContainer container) {
         SequentialCommandGroup command = new SequentialCommandGroup();
-        container.GetTank().Calibrate();
+        //container.GetTank().Calibrate();
         return command;
     }
 

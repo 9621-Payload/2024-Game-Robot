@@ -46,8 +46,8 @@ public final class Constants {
     public static final double kFireTime = 4.0;
     public static final double kPrepareTime = 2.0;
 
-    public static final double kBackupDistance = -15.0;
-    public static final double kBackupTime = 1.0;
+    public static final double kBackupDistance = -54.0;
+    public static final double kBackupTime = 7.0;
 
     public static final double kSpeakerSideTurnTime = 2.5;
     public static final double kSpeakerSideForwardDistance = 74;

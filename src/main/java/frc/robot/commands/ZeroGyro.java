@@ -15,14 +15,14 @@ public class ZeroGyro extends Command {
 
     @Override
     public void initialize() {
+        m_Drive.Calibrate();
+        arm.Zero();
 
     }
 
     @Override
     public void execute(){
         /* Calibrate the gyro */
-        m_Drive.Calibrate();
-        arm.Zero();
     }
 
     @Override

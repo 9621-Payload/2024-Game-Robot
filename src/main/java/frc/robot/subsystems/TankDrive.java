@@ -105,7 +105,7 @@ public class TankDrive extends SubsystemBase {
      * Reset everything 
      */
     public void Calibrate() {
-        m_navX.reset();
+        //m_navX.reset();
         m_navX.zeroYaw();
         encoderRight.reset();
         encoderLeft.reset();

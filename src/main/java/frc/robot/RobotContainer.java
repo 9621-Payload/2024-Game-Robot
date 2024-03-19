@@ -64,9 +64,9 @@ public class RobotContainer {
     autoModeSelector = new AutoModeSelector(this);
 
     /* Register the subsystems */
-    CommandScheduler.getInstance().registerSubsystem(s_tankDrive);
-    CommandScheduler.getInstance().registerSubsystem(s_Shooter);
-    CommandScheduler.getInstance().registerSubsystem(s_ClimberBox);
+    // CommandScheduler.getInstance().registerSubsystem(s_tankDrive);
+    // CommandScheduler.getInstance().registerSubsystem(s_Shooter);
+    // CommandScheduler.getInstance().registerSubsystem(s_ClimberBox);
 
     /* Shuffleboard setup */
     ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
