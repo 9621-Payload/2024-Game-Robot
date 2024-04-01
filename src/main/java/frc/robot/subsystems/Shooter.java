@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AutoContstants;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
@@ -12,6 +13,7 @@ public class Shooter extends SubsystemBase {
     
     /* Creates a new Shooter */
     public Shooter() {
+        m_upperMotor.setInverted(true);
     }
 
     /*
@@ -45,8 +47,8 @@ public class Shooter extends SubsystemBase {
     }
 
     /* Moksh did this, idk but is the same as SpeakerShot */
-    public void farShot() {
-        m_upperMotor.set(-1.0);
+    public void KnockShot() {
+        m_upperMotor.set(AutoContstants.kKnockSpeed);
     }
 
     /* Stop the motors for the shooter */

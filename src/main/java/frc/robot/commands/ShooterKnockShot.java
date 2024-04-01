@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
-public class ShooterFarShot extends Command {
+public class ShooterKnockShot extends Command {
     private Shooter s_Shooter;
 
-    public ShooterFarShot(Shooter shooter) {
+    public ShooterKnockShot(Shooter shooter) {
         this.s_Shooter = shooter;
         addRequirements(shooter);
         
@@ -20,6 +20,6 @@ public class ShooterFarShot extends Command {
     @Override
     public void execute(){
         /* Far Shot */
-        s_Shooter.farShot();
+        s_Shooter.KnockShot();
     }
 }

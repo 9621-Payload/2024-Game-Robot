@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import frc.robot.Constants.AutoContstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.*;
 import frc.robot.subsystems.Shooter;
@@ -13,7 +14,6 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
@@ -35,16 +35,19 @@ public class RobotContainer {
   private final Trigger operatorRightTriggerDepressed = new Trigger(
       () -> c_operatorController.getRightTriggerAxis() > 0.1);
   private final Trigger operatorRightBumper = c_operatorController.rightBumper();
+  private final Trigger operatorY = c_operatorController.y();
+  private final Trigger operatorA = c_operatorController.a();
+  private final Trigger operatorBack = c_operatorController.back();
+ private final Trigger operatorLeftBumper = c_operatorController.leftBumper();
+
   private final Trigger driverDownPad = c_driverController.povDown();
   private final Trigger driverupPad = c_driverController.povUp();
   private final Trigger driverrightPad = c_driverController.povRight();
   private final Trigger driverleftPad = c_driverController.povLeft();
+
   //private final Trigger driverLeftTriggerDepressed = new Trigger(
   //    () -> c_driverController.getRawAxis(2) > 0.1);
   //private final Trigger operatorUpPad = c_operatorController.povUp();
-  private final Trigger operatorY = c_operatorController.y();
-  private final Trigger operatorA = c_operatorController.a();
-  private final Trigger operatorBack = c_operatorController.back();
 
   /* Autonomous selector */
   private AutoModeSelector autoModeSelector;
@@ -108,10 +111,11 @@ public class RobotContainer {
     /* ======== */
     operatorLeftTriggerDepressed.whileTrue(new ShooterIntake(s_Shooter));
     operatorRightTriggerDepressed.onTrue(
-        new ShooterSpeakerShot(s_Shooter).withTimeout(2).andThen(new ShooterFire(s_Shooter, 1.0)).withTimeout(4));
+        new ShooterSpeakerShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 1.0)).withTimeout(2));
     operatorRightBumper
-        .onTrue(new ShooterAmpShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 0.6).withTimeout(1.4)));
+        .onTrue(new ShooterFeedShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 0.6).withTimeout(1.4)));
     //operatorUpPad.whileTrue(new ShooterFarShot(s_Shooter));
+    operatorLeftBumper.onTrue(new ShooterFeedShot(s_Shooter, AutoContstants.kKnockSpeed).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(s_Shooter, 0.5)).withTimeout(AutoContstants.kFireTimeAUto));
     operatorA.whileTrue(new Decend(s_ClimberBox));
     operatorY.whileTrue(new Lift(s_ClimberBox));
     operatorBack.onTrue(new ManualArm());

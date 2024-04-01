@@ -38,8 +38,8 @@ public class TankDrive extends SubsystemBase {
         m_rightMotors.setInverted(true);
 
         /* Setups the encoders */
-        encoderLeft = new Encoder(7,6, true, EncodingType.k2X);
-        encoderRight = new Encoder(9, 8, false, EncodingType.k2X);
+        encoderLeft = new Encoder(TankConstants.kEncoderLeftChannelA,TankConstants.kEncoderLeftChannelB, true, EncodingType.k2X);
+        encoderRight = new Encoder(TankConstants.kEncoderRightChannelA, TankConstants.kEncoderRightChannelB, false, EncodingType.k2X);
 
         /* Sets the distance per pulse on our encoders */
         encoderRight.setDistancePerPulse(4.86/512.0);
@@ -105,7 +105,7 @@ public class TankDrive extends SubsystemBase {
      * Reset everything 
      */
     public void Calibrate() {
-        //m_navX.reset();
+        m_navX.reset();
         m_navX.zeroYaw();
         encoderRight.reset();
         encoderLeft.reset();

@@ -8,7 +8,7 @@ import frc.robot.commands.*;
 public class SpeakerRight extends SequentialCommandGroup {
     public SpeakerRight(RobotContainer robot){
         // Slight fire and intake to drop the robots lip
-        addCommands(new ShooterAmpShot(robot.GetShooter(), 0.23).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(robot.GetShooter(), 0.5)).withTimeout(2.5));
+        addCommands(new ShooterFeedShot(robot.GetShooter(), AutoContstants.kKnockSpeed).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(robot.GetShooter(), 0.5)).withTimeout(AutoContstants.kFireTimeAUto));
         addCommands(new ShooterIntake(robot.GetShooter()).withTimeout(1));
 
         // Shoot high

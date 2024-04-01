@@ -20,6 +20,11 @@ public final class Constants {
     public static final int kLeftMotorPort2 = 7;
     public static final int kRightMotorPort1 = 4;
     public static final int kRightMotorPort2 = 6;
+
+    public static final int kEncoderLeftChannelA = 7;
+    public static final int kEncoderLeftChannelB = 6;
+    public static final int kEncoderRightChannelA = 9;
+    public static final int kEncoderRightChannelB = 8;
   }
 
   public static class ShooterConstants {
@@ -41,10 +46,13 @@ public final class Constants {
     public static final double kJitterTime = 1.0;
     public static final double kJitterDistance = 20.0;
 
+    public static final double kKnockSpeed = 0.14;
+    public static final double kFireTimeAUto = 1.7;
+
     public static final double kFinalHeading = 0.0;
 
-    public static final double kFireTime = 4.0;
-    public static final double kPrepareTime = 2.0;
+    public static final double kFireTime = 1.5;
+    public static final double kPrepareTime = 1.0;
 
     public static final double kBackupDistance = -54.0;
     public static final double kBackupTime = 7.0;

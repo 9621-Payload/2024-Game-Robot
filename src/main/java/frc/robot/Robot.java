@@ -46,6 +46,9 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    // To test when the navx2 gets stuck in start up calibration -> SPI 1 OFF, 2 ON 
+    //System.out.println(m_robotContainer.GetTank().GetNavX().isCalibrating());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
