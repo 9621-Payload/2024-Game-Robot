@@ -7,6 +7,7 @@ import frc.robot.commands.*;
 
 public class SpeakerCenter extends SequentialCommandGroup {
     public SpeakerCenter(RobotContainer robot){
+        robot.GetTank().ResetEncode();
             // Slight fire and intake to drop the robots lip
             // addCommands(new ShooterAmpShot(robot.GetShooter(), 0.23).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(robot.GetShooter(), 0.5)).withTimeout(2.5));
             // addCommands(new ShooterIntake(robot.GetShooter()).withTimeout(1));
@@ -15,6 +16,6 @@ public class SpeakerCenter extends SequentialCommandGroup {
             addCommands(new ShooterSpeakerShot(robot.GetShooter()).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(robot.GetShooter(), 1.0)).withTimeout(AutoContstants.kFireTime));
             
             // back up
-            addCommands(new TankMoveAuto(robot.GetTank(), AutoContstants.kBackupDistance).withTimeout(AutoContstants.kBackupTime));
+            addCommands(new TankMoveAuto(robot.GetTank(), AutoContstants.kBackupCenterDistance).withTimeout(AutoContstants.kBackupTime));
     }
 }

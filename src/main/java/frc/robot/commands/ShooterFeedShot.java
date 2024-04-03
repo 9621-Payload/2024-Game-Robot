@@ -11,7 +11,7 @@ public class ShooterFeedShot extends Command {
         this.s_Shooter = shooter;
         addRequirements(shooter);
 
-        this.speed = 0.17;
+        this.speed = 0.18;
         
     }
     public ShooterFeedShot(Shooter shooter, double speed) {

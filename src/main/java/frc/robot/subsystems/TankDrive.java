@@ -14,9 +14,9 @@ import frc.robot.Constants.TankConstants;
 public class TankDrive extends SubsystemBase {
     /* Motor controllers to move the tank */
     private PWMSparkMax m_leftMotorFollower = new PWMSparkMax(TankConstants.kLeftMotorPort1);
-    private PWMSparkMax m_leftMotors = new PWMSparkMax(TankConstants.kLeftMotorPort2);
+    public PWMSparkMax m_leftMotors = new PWMSparkMax(TankConstants.kLeftMotorPort2);
     private PWMSparkMax m_rightMotorFollower = new PWMSparkMax(TankConstants.kRightMotorPort2);
-    private PWMSparkMax m_rightMotors = new PWMSparkMax(TankConstants.kRightMotorPort1);
+    public PWMSparkMax m_rightMotors = new PWMSparkMax(TankConstants.kRightMotorPort1);
 
     /* PID Controller for distance */
     public PIDController disController = new PIDController(0.1, 0, 0);

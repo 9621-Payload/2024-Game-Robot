@@ -16,8 +16,8 @@ public class AutoModeSelector {
          */
         autoModeChooser.addOption("Drive Forward", DriveForward(container));
         autoModeChooser.addOption("Speaker Center", SpeakerCenter(container));
-        autoModeChooser.addOption("Speaker Left", SpeakerLeft(container));
-        autoModeChooser.addOption("Speaker Right", SpeakerRight(container));
+        autoModeChooser.addOption("Speaker Amp", SpeakerAmp(container));
+        autoModeChooser.addOption("Speaker Source", SpeakerSource(container));
         autoModeChooser.addOption("Just Shoot", JustShoot(container));
     }
 
@@ -43,11 +43,11 @@ public class AutoModeSelector {
     private SequentialCommandGroup SpeakerCenter(RobotContainer container) {
         return new SpeakerCenter(container);
     }
-    private SequentialCommandGroup SpeakerRight(RobotContainer container) {
-        return new SpeakerRight(container);
+    private SequentialCommandGroup SpeakerSource(RobotContainer container) {
+        return new SpeakerSource(container);
     }
-    private SequentialCommandGroup SpeakerLeft(RobotContainer container) {
-        return new SpeakerLeft(container);
+    private SequentialCommandGroup SpeakerAmp(RobotContainer container) {
+        return new SpeakerAmp(container);
     }
 
 }

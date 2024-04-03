@@ -13,6 +13,7 @@ import frc.robot.subsystems.ClimberBox;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -82,6 +83,8 @@ public class RobotContainer {
     mainTab.add("AutoMode", autoModeSelector.getAutoChooser()).withSize(2, 1)
         .withPosition(0, 0);
 
+    mainTab.add("Encoder", new ResetDriveEncoders(s_tankDrive, s_ClimberBox).ignoringDisable(true)).withSize(1, 1)
+        .withPosition(3, 1);
     mainTab.add("Zero", new ZeroGyro(s_tankDrive, s_ClimberBox).ignoringDisable(true)).withSize(1, 1)
         .withPosition(4, 1);
     mainTab.addDouble("Right", s_tankDrive.GetRightEncoder()).withSize(1, 1)
