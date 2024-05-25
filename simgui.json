@@ -37,6 +37,7 @@
     "types": {
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Main/AutoMode": "String Chooser",
+      "/Shuffleboard/Main/Encoder": "Command",
       "/Shuffleboard/Main/Gyro zero": "Command",
       "/Shuffleboard/Main/Zero": "Command"
     }

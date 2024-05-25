@@ -64,6 +64,11 @@ public class RobotContainer {
             () -> c_driverController.getLeftY(),
             () -> c_driverController.getRightX()));
 
+    /* Setup the default command -> go to 0 */
+    // s_ClimberBox.setDefaultCommand(
+    //  new ArmAutoReset(s_Shooter)   
+    //);
+
     /* Create a new auto mode selector */
     autoModeSelector = new AutoModeSelector(this);
 
@@ -74,7 +79,7 @@ public class RobotContainer {
 
     /* Shuffleboard setup */
     ShuffleboardTab mainTab = Shuffleboard.getTab("Main");
-    mainTab.addString("Alliance", () -> DriverStation.getAlliance().get().name()).withSize(1, 1)
+    mainTab.addString("Alliance", () -> AllianceColor()).withSize(1, 1)
         .withPosition(2, 0);
     mainTab.addDouble("Gyro", () -> s_tankDrive.GetRotation().getAsDouble()).withSize(1, 1)
         .withPosition(3, 0);
@@ -118,7 +123,7 @@ public class RobotContainer {
     operatorRightBumper
         .onTrue(new ShooterFeedShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 0.6).withTimeout(1.4)));
     //operatorUpPad.whileTrue(new ShooterFarShot(s_Shooter));
-    operatorLeftBumper.onTrue(new ShooterFeedShot(s_Shooter, AutoContstants.kKnockSpeed).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(s_Shooter, 0.5)).withTimeout(AutoContstants.kFireTimeAUto));
+    operatorLeftBumper.onTrue(new ShooterKnockShot(s_Shooter).withTimeout(AutoContstants.kPrepareTime).andThen(new ShooterFire(s_Shooter, 0.5)).withTimeout(AutoContstants.kFireTimeAUto).andThen(new ShooterIntake(s_Shooter).withTimeout(1)));
     operatorA.whileTrue(new Decend(s_ClimberBox));
     operatorY.whileTrue(new Lift(s_ClimberBox));
     operatorBack.onTrue(new ManualArm());
@@ -137,5 +142,10 @@ public class RobotContainer {
   /* Get the selected auto command */
   public Command getAutonomousCommand() {
     return autoModeSelector.getAutoChooser().getSelected();
+}
+
+public String AllianceColor()
+{
+    return DriverStation.getAlliance().get().name();
 }
 }

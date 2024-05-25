@@ -48,7 +48,7 @@ public class Shooter extends SubsystemBase {
 
     /* Moksh did this, idk but is the same as SpeakerShot */
     public void KnockShot() {
-        m_upperMotor.set(AutoContstants.kKnockSpeed);
+        m_upperMotor.set(-AutoContstants.kKnockSpeed);
     }
 
     /* Stop the motors for the shooter */

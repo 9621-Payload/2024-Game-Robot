@@ -19,6 +19,10 @@ public class AutoModeSelector {
         autoModeChooser.addOption("Speaker Amp", SpeakerAmp(container));
         autoModeChooser.addOption("Speaker Source", SpeakerSource(container));
         autoModeChooser.addOption("Just Shoot", JustShoot(container));
+
+        // Get the direction for turning
+        double v = container.AllianceColor() == "Blue" ? -1 : 1;
+        autoModeChooser.addOption("Untested - Mid Destory", MidDestory(container, v));
     }
 
     public SendableChooser<Command> getAutoChooser() {
@@ -49,5 +53,7 @@ public class AutoModeSelector {
     private SequentialCommandGroup SpeakerAmp(RobotContainer container) {
         return new SpeakerAmp(container);
     }
-
+    private SequentialCommandGroup MidDestory(RobotContainer container, double v) {
+        return new MidDestory(container, v);
+    }
 }

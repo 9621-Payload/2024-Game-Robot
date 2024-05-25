@@ -9,7 +9,7 @@ import frc.robot.subsystems.TankDrive;
 public class TankRotate extends Command {
     private TankDrive m_Drive;
     private Double v_rotation;
-    private PIDController rotationController = new PIDController(0.02, 0, 0.005);
+    private PIDController rotationController = new PIDController(0.04, 0, 0.005);
 
     public TankRotate(TankDrive m_Drive, Double v_rotation) {
         this.m_Drive = m_Drive;

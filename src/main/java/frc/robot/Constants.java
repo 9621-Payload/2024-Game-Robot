@@ -33,8 +33,8 @@ public final class Constants {
   }
   public static class ClimberBoxConstants {
     public static final int kClimberBoxMotor = 12;
-    public static final double kMaxHeight = 295;
-    public static final double kMinHeight = 5.0;
+    public static final double kMaxHeight = 370;
+    public static final double kMinHeight = 3.0;
   }
 
   public static class GyroStuff{
@@ -54,7 +54,7 @@ public final class Constants {
     public static final double kFireTime = 1.5;
     public static final double kPrepareTime = 1.0;
 
-    public static final double kBackupSourceDistance = -54.0;
+    public static final double kBackupSourceDistance = -70.0;
     public static final double kBackupCenterDistance = -54.0;
     public static final double kBackupAmpDistance = -40.0;
     public static final double kBackupTime =3.0;
