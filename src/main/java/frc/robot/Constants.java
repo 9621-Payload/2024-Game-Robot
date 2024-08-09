@@ -21,10 +21,10 @@ public final class Constants {
     public static final int kRightMotorPort1 = 4;
     public static final int kRightMotorPort2 = 6;
 
-    public static final int kEncoderLeftChannelA = 7;
-    public static final int kEncoderLeftChannelB = 6;
-    public static final int kEncoderRightChannelA = 9;
-    public static final int kEncoderRightChannelB = 8;
+    public static final int kEncoderLeftChannelA = 1;
+    public static final int kEncoderLeftChannelB = 0;
+    public static final int kEncoderRightChannelA = 3;
+    public static final int kEncoderRightChannelB = 2;
   }
 
   public static class ShooterConstants {
