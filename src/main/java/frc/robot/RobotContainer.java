@@ -120,7 +120,7 @@ public class RobotContainer {
         operatorLeftTriggerDepressed.whileTrue(new ShooterIntake(s_Shooter));
         operatorRightTriggerDepressed.onTrue(
                 new ShooterSpeakerShot(s_Shooter).withTimeout(1).andThen(new ShooterFire(s_Shooter, 1.0))
-                        .withTimeout(2));
+                        .withTimeout(1.75));
         operatorRightBumper
                 .onTrue(new ShooterFeedShot(s_Shooter).withTimeout(1)
                         .andThen(new ShooterFire(s_Shooter, 0.6).withTimeout(1.4)));

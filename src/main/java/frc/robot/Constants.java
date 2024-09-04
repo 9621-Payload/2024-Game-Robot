@@ -44,15 +44,15 @@ public final class Constants {
     public static final double kJitterTime = 1.0;
     public static final double kJitterDistance = 20.0;
 
-    public static final double kKnockSpeed = 0.14;
-    public static final double kFireTimeAUto = 1.7;
+    public static final double kKnockSpeed = 0.1;
+    public static final double kFireTimeAUto = 1.4;
 
     public static final double kFinalHeading = 0.0;
 
     public static final double kFireTime = 1.5;
     public static final double kPrepareTime = 1.0;
 
-    public static final double kBackupSourceDistance = -70.0;
+    public static final double kBackupSourceDistance = -70.0 * 1.5;
     public static final double kBackupCenterDistance = -54.0;
     public static final double kBackupAmpDistance = -40.0;
     public static final double kBackupTime = 3.0;

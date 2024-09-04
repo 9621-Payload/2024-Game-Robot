@@ -14,15 +14,15 @@ public class AutoModeSelector {
         /*
          * Add all the options
          */
-        autoModeChooser.addOption("Drive Forward", DriveForward(container));
-        autoModeChooser.addOption("Speaker Center", SpeakerCenter(container));
-        autoModeChooser.addOption("Speaker Amp", SpeakerAmp(container));
-        autoModeChooser.addOption("Speaker Source", SpeakerSource(container));
+        autoModeChooser.addOption("Just Drive", DriveForward(container));
         autoModeChooser.addOption("Just Shoot", JustShoot(container));
+        autoModeChooser.addOption("Shoot and Backup", SpeakerCenter(container));
+        autoModeChooser.addOption("Shoot, Backup Short", SpeakerAmp(container));
+        autoModeChooser.addOption("Shoot, Backup Far", SpeakerSource(container));
 
         // Get the direction for turning
-        double v = container.AllianceColor() == "Blue" ? -1 : 1;
-        autoModeChooser.addOption("Untested - Mid Destory", MidDestory(container, v));
+        //double v = container.AllianceColor() == "Blue" ? -1 : 1;
+        //autoModeChooser.addOption("Untested - Mid Destory", MidDestory(container, v));
     }
 
     public SendableChooser<Command> getAutoChooser() {
@@ -53,7 +53,7 @@ public class AutoModeSelector {
     private SequentialCommandGroup SpeakerAmp(RobotContainer container) {
         return new SpeakerAmp(container);
     }
-    private SequentialCommandGroup MidDestory(RobotContainer container, double v) {
-        return new MidDestory(container, v);
-    }
+    //private SequentialCommandGroup MidDestory(RobotContainer container, double v) {
+    //    return new MidDestory(container, v);
+    //}
 }

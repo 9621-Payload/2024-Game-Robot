@@ -60,6 +60,7 @@ public class TankDrive extends SubsystemBase {
      */
     public void Move(Double forward, Double rotate) {
         m_Drive.arcadeDrive(forward, rotate);
+        //System.out.println(forward);
     }
 
     /*
